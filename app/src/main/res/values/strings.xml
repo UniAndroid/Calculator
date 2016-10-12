@@ -5,4 +5,23 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="nineNumber">9</string>
+    <string name="eightNumber">8</string>
+    <string name="sevenNumber">7</string>
+    <string name="sixNumber">6</string>
+    <string name="fiveNumber">5</string>
+    <string name="fourNumber">4</string>
+    <string name="threeNumber">3</string>
+    <string name="twoNumber">2</string>
+    <string name="oneNumber">1</string>
+    <string name="zeroNumber">0</string>
+
+    <string name="collonSign">,</string>
+    <string name="divideSign">%</string>
+    <string name="multiplySign">x</string>
+    <string name="substractSign">-</string>
+    <string name="addSign">+</string>
+    <string name="equalSign">=</string>
+    <string name="clearSign">C</string>
 </resources>
