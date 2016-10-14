@@ -24,4 +24,6 @@
     <string name="addSign">+</string>
     <string name="equalSign">=</string>
     <string name="clearSign">C</string>
+
+    <string name="malformedException">Die Gleichung ist nicht korrekt aufgebaut.</string>
 </resources>
