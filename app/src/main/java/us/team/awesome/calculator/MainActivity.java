@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import us.team.awesome.calculator.math.CalculationList;
+import us.team.awesome.calculator.util.EquationMalformedException;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity
     private Button zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton;
     private Button sevenButton, eightButton, nineButton, addButton, substractButton, collonButton;
     private Button clearButton, multiplyButton, divideButton;
+
+    private CalculationList calculationList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,45 +44,33 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         this.calculationTextView = (TextView) findViewById(R.id.calculationTextView);
+        this.calculationList = new CalculationList();
+
 
         this.zeroButton = (Button) findViewById(R.id.zeroButton);
-        this.zeroButton.setOnClickListener(this.getNumberClickListener((String) this.zeroButton.getText()));
         this.oneButton = (Button) findViewById(R.id.oneButton);
-        this.oneButton.setOnClickListener(this.getNumberClickListener((String) this.oneButton.getText()));
         this.twoButton = (Button) findViewById(R.id.twoButton);
-        this.twoButton.setOnClickListener(this.getNumberClickListener((String) this.twoButton.getText()));
         this.threeButton = (Button) findViewById(R.id.threeButton);
-        this.threeButton.setOnClickListener(this.getNumberClickListener((String) this.threeButton.getText()));
         this.fourButton = (Button) findViewById(R.id.fourButton);
-        this.fourButton.setOnClickListener(this.getNumberClickListener((String) this.fourButton.getText()));
         this.fiveButton = (Button) findViewById(R.id.fiveButton);
-        this.fiveButton.setOnClickListener(this.getNumberClickListener((String) this.fiveButton.getText()));
         this.sixButton = (Button) findViewById(R.id.sixButton);
-        this.sixButton.setOnClickListener(this.getNumberClickListener((String) this.sixButton.getText()));
         this.sevenButton = (Button) findViewById(R.id.sevenButton);
-        this.sevenButton.setOnClickListener(this.getNumberClickListener((String) this.sevenButton.getText()));
         this.eightButton = (Button) findViewById(R.id.eightButton);
-        this.eightButton.setOnClickListener(this.getNumberClickListener((String) this.eightButton.getText()));
         this.nineButton = (Button) findViewById(R.id.nineButton);
-        this.nineButton.setOnClickListener(this.getNumberClickListener((String) this.nineButton.getText()));
 
         this.collonButton = (Button) findViewById(R.id.collonButton);
-        this.collonButton.setOnClickListener(this.getNumberClickListener((String) this.collonButton.getText()));
 
         this.addButton = (Button) findViewById(R.id.addButton);
-        this.addButton.setOnClickListener(this.getOperatorClickListener((String) this.addButton.getText()));
         this.substractButton = (Button) findViewById(R.id.substractButton);
-        this.substractButton.setOnClickListener(this.getOperatorClickListener((String) this.substractButton.getText()));
         this.multiplyButton = (Button) findViewById(R.id.multiplyButton);
-        this.multiplyButton.setOnClickListener(this.getOperatorClickListener((String) this.multiplyButton.getText()));
         this.divideButton = (Button) findViewById(R.id.divideButton);
-        this.divideButton.setOnClickListener(this.getOperatorClickListener((String) this.divideButton.getText()));
 
         this.clearButton = (Button) findViewById(R.id.clearButton);
         this.clearButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
+                calculationList = new CalculationList();
                 calculationTextView.setText("0");
             }
         });
@@ -140,26 +133,57 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-
-    private View.OnClickListener getNumberClickListener(final String number){
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(calculationTextView.getText().length() == 1 && calculationTextView.getText().charAt(0) == '0'){
-                    calculationTextView.setText(number);
-                } else {
-                    calculationTextView.setText(calculationTextView.getText() + number);
-                }
-            }
-        };
+    public void numberClickedListener(View view) {
+        Button clickedButton = (Button) view;
+        String number = (String) clickedButton.getText();
+        calculationList.addNumber(number);
+        if(calculationTextView.getText().length() == 1 && calculationTextView.getText().charAt(0) == '0'){
+            calculationTextView.setText(number);
+        } else {
+            calculationTextView.setText(calculationTextView.getText() + number);
+        }
     }
 
-    private View.OnClickListener getOperatorClickListener(final String operator){
-        return new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculationTextView.setText(calculationTextView.getText() + operator);
-            }
-        };
+    public void  multiplyClickedListener(View view) {
+        String operator = getButtonSign(view);
+        calculationTextView.setText(calculationTextView.getText() + operator);
+        calculationList.addTimesOperator();
+    }
+
+    public void  divideClickedListener(View view) {
+        String operator = getButtonSign(view);
+        calculationTextView.setText(calculationTextView.getText() + operator);
+        calculationList.addDivideOperator();
+    }
+
+    public void  addClickedListener(View view) {
+        String operator = getButtonSign(view);
+        calculationTextView.setText(calculationTextView.getText() + operator);
+        calculationList.addAddOperator();
+    }
+
+    public void  subtractClickedListener(View view) {
+        String operator = getButtonSign(view);
+        calculationTextView.setText(calculationTextView.getText() + operator);
+        calculationList.addSubtractOperator();
+    }
+
+    public void colonClickedListener(View view) {
+        String colon = getButtonSign(view);
+        calculationTextView.setText(calculationTextView.getText() + colon);
+        calculationList.addDecimalPoint();
+
+    }
+
+    public void calculateClickedListener(View view) {
+        try {
+            Log.d("Calculation Result", ""+calculationList.getCalculationResult());
+        } catch (EquationMalformedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getButtonSign(View view){
+        return (String) ((Button)view).getText();
     }
 }

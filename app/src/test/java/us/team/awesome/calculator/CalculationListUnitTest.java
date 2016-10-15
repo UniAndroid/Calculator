@@ -133,6 +133,19 @@ public class CalculationListUnitTest {
         assertEquals(5.25, result, 0);
     }
 
+    @Test
+    public void shouldCalculateCorrectly9() throws Exception {
+        CalculationList list = new CalculationList();
+        list.addNumber(2);
+        list.addTimesOperator();
+        list.addNumber(5);
+        list.getCalculationResult();
+        list.addDecimalPoint();
+        list.addNumber(1);
+        double result = list.getCalculationResult();
+        assertEquals(10.2, result, 0);
+    }
+
     @Test(expected= EquationMalformedException.class)
     public void shouldCalculateFalse() throws Exception {
         CalculationList list = new CalculationList();

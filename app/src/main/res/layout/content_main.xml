@@ -52,6 +52,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="divideClickedListener"
             android:text="@string/divideSign">
         </Button>
     </LinearLayout>
@@ -69,6 +70,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="numberClickedListener"
             android:text="@string/sevenNumber">
         </Button>
         <Button
@@ -77,6 +79,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="numberClickedListener"
             android:text="@string/eightNumber">
         </Button>
         <Button
@@ -85,6 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="numberClickedListener"
             android:text="@string/nineNumber">
         </Button>
         <Button
@@ -93,6 +97,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="multiplyClickedListener"
             android:text="@string/multiplySign">
         </Button>
     </LinearLayout>
@@ -111,6 +116,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="numberClickedListener"
             android:text="@string/fourNumber">
         </Button>
         <Button
@@ -119,6 +125,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="numberClickedListener"
             android:text="@string/fiveNumber">
         </Button>
         <Button
@@ -127,6 +134,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="numberClickedListener"
             android:text="@string/sixNumber">
         </Button>
         <Button
@@ -135,6 +143,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="subtractClickedListener"
             android:text="@string/substractSign">
         </Button>
     </LinearLayout>
@@ -152,6 +161,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="numberClickedListener"
             android:text="@string/oneNumber">
         </Button>
         <Button
@@ -160,6 +170,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="numberClickedListener"
             android:text="@string/twoNumber">
         </Button>
         <Button
@@ -168,6 +179,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="numberClickedListener"
             android:text="@string/threeNumber">
         </Button>
         <Button
@@ -176,6 +188,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="addClickedListener"
             android:text="@string/addSign">
         </Button>
     </LinearLayout>
@@ -193,6 +206,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
+            android:onClick="numberClickedListener"
             android:text="@string/zeroNumber">
         </Button>
         <Button
@@ -201,6 +215,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="colonClickedListener"
             android:text="@string/collonSign">
         </Button>
         <Button
@@ -209,6 +224,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:onClick="calculateClickedListener"
             android:text="@string/equalSign">
         </Button>
     </LinearLayout>

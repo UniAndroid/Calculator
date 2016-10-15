@@ -18,6 +18,10 @@ public class CalculationList extends LinkedList {
         super();
     }
 
+    public CalculationList(LinkedList list) {
+        super(list);
+    }
+
     public void addNumber(int num) {
         if (!isEmpty() && getLast() instanceof CalculationNumber) {
             CalculationNumber numInstance = (CalculationNumber) getLast();
@@ -26,6 +30,11 @@ public class CalculationList extends LinkedList {
         } else {
             add(new CalculationNumber(num));
         }
+    }
+
+    public void addNumber(String num){
+        int _num = Integer.parseInt(num);
+        this.addNumber(_num);
     }
 
     public void addAddOperator() {
@@ -60,6 +69,8 @@ public class CalculationList extends LinkedList {
 
     public double getCalculationResult() throws EquationMalformedException {
         try {
+            // CalculationList list = new CalculationList(this);
+            // TODO: Call By Reference auflösen => getNextOperatorToCalculate()
             return calculate(this);
         } catch (IndexOutOfBoundsException e) {
             // String aus strings.xml auslesen, dafür ist der context nötigt
