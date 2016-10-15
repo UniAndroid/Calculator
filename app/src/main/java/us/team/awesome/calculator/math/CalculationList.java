@@ -12,14 +12,20 @@ import us.team.awesome.calculator.util.MathException;
 
 public class CalculationList extends LinkedList {
 
+    private boolean decimalPointAdded = false;
+
     public CalculationList() {
         super();
     }
 
-    public void addNumber(double num) {
-        //hier kann man noch validierungen machen
-//        add(num);
-        add(new CalculationNumber(num));
+    public void addNumber(int num) {
+        if (!isEmpty() && getLast() instanceof CalculationNumber) {
+            CalculationNumber numInstance = (CalculationNumber) getLast();
+            numInstance.attacheNumber(num, decimalPointAdded);
+            unsetDecimalPointAdded();
+        } else {
+            add(new CalculationNumber(num));
+        }
     }
 
     public void addAddOperator() {
@@ -36,6 +42,20 @@ public class CalculationList extends LinkedList {
 
     public void addDivideOperator() {
         add(new DivideOperator());
+    }
+
+    public void addDecimalPoint() {
+        if (!isEmpty() && getLast() instanceof CalculationNumber) {
+            CalculationNumber _num = (CalculationNumber) getLast();
+            if (_num.hasNoDecimalDigits()) {
+                setDecimalPointAdded();
+            } else {
+                unsetDecimalPointAdded();
+            }
+        } else {
+            addNumber(0);
+            setDecimalPointAdded();
+        }
     }
 
     public double getCalculationResult() throws EquationMalformedException {
@@ -111,5 +131,13 @@ public class CalculationList extends LinkedList {
         } else {
             return op2Index == -1 || (op1Index < op2Index);
         }
+    }
+
+    private void setDecimalPointAdded() {
+        decimalPointAdded = true;
+    }
+
+    private void unsetDecimalPointAdded() {
+        decimalPointAdded = false;
     }
 }

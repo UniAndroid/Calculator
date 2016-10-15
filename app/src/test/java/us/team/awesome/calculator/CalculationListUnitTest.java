@@ -35,11 +35,11 @@ public class CalculationListUnitTest {
     @Test
     public void shouldCalculateCorrectly1() throws Exception {
         CalculationList list = new CalculationList();
-        list.addNumber(19.0);
+        list.addNumber(19);
         list.addSubtractOperator();
-        list.addNumber(10.0);
+        list.addNumber(10);
         list.addSubtractOperator();
-        list.addNumber(10.0);
+        list.addNumber(10);
         double result = list.getCalculationResult();
         assertEquals(-1, result, 0);
     }
@@ -47,11 +47,11 @@ public class CalculationListUnitTest {
     @Test
     public void shouldCalculateCorrectly2() throws Exception {
         CalculationList list = new CalculationList();
-        list.addNumber(19.0);
+        list.addNumber(19);
         list.addSubtractOperator();
-        list.addNumber(10.0);
+        list.addNumber(10);
         list.addSubtractOperator();
-        list.addNumber(-10.0);
+        list.addNumber(-10);
         double result = list.getCalculationResult();
         assertEquals(19, result, 0);
     }
@@ -66,11 +66,11 @@ public class CalculationListUnitTest {
     @Test
     public void shouldCalculateCorrectly4() throws Exception {
         CalculationList list = new CalculationList();
-        list.addNumber(19.0);
+        list.addNumber(19);
         list.addSubtractOperator();
-        list.addNumber(10.0);
+        list.addNumber(10);
         list.addAddOperator();
-        list.addNumber(-10.0);
+        list.addNumber(-10);
         list.addTimesOperator();
         list.addNumber(2);
         list.addAddOperator();
@@ -81,12 +81,51 @@ public class CalculationListUnitTest {
         assertEquals(-9, result, 0);
     }
 
+    @Test
+    public void shouldCalculateCorrectly5() throws Exception {
+        CalculationList list = new CalculationList();
+        list.addNumber(1);
+        list.addNumber(2);
+        list.addNumber(5);
+        list.addAddOperator();
+        list.addNumber(5);
+        double result = list.getCalculationResult();
+        assertEquals(130, result, 0);
+    }
+
+    @Test
+    public void shouldCalculateCorrectly6() throws Exception {
+        CalculationList list = new CalculationList();
+        list.addNumber(1);
+        list.addDecimalPoint();
+        list.addNumber(2);
+        list.addNumber(5);
+        list.addAddOperator();
+        list.addNumber(5);
+        double result = list.getCalculationResult();
+        assertEquals(6.25, result, 0);
+    }
+
+    @Test
+    public void shouldCalculateCorrectly7() throws Exception {
+        CalculationList list = new CalculationList();
+        list.addNumber(1);
+        list.addDecimalPoint();
+        list.addNumber(2);
+        list.addDecimalPoint();
+        list.addNumber(5);
+        list.addAddOperator();
+        list.addNumber(5);
+        double result = list.getCalculationResult();
+        assertEquals(6.25, result, 0);
+    }
+
     @Test(expected= EquationMalformedException.class)
     public void shouldCalculateFalse() throws Exception {
         CalculationList list = new CalculationList();
-        list.addNumber(19.0);
+        list.addNumber(19);
         list.addSubtractOperator();
-        list.addNumber(10.0);
+        list.addNumber(10);
         list.addSubtractOperator();
         double result = list.getCalculationResult();
     }
@@ -94,7 +133,7 @@ public class CalculationListUnitTest {
     @Test(expected= EquationMalformedException.class)
     public void shouldCalculateFalse1() throws Exception {
         CalculationList list = new CalculationList();
-        list.addNumber(19.0);
+        list.addNumber(19);
         list.addDivideOperator();
         list.addNumber(0);
         double result = list.getCalculationResult();
@@ -102,19 +141,19 @@ public class CalculationListUnitTest {
 
     private CalculationList createExampleCalculationList() {
         CalculationList list = new CalculationList();
-        list.addNumber(19.0);
+        list.addNumber(19);
         list.addSubtractOperator();
-        list.addNumber(10.0);
+        list.addNumber(10);
         return list;
     }
 
     private CalculationList createExampleCalculationListWithDots() {
         CalculationList list = new CalculationList();
-        list.addNumber(19.0);
+        list.addNumber(19);
         list.addSubtractOperator();
-        list.addNumber(10.0);
+        list.addNumber(10);
         list.addTimesOperator();
-        list.addNumber(3.0);
+        list.addNumber(3);
         return list;
     }
 }
