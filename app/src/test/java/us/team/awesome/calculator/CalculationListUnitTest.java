@@ -120,6 +120,19 @@ public class CalculationListUnitTest {
         assertEquals(6.25, result, 0);
     }
 
+    @Test
+    public void shouldCalculateCorrectly8() throws Exception {
+        CalculationList list = new CalculationList();
+        list.addDecimalPoint();
+        list.addNumber(2);
+        list.addDecimalPoint();
+        list.addNumber(5);
+        list.addAddOperator();
+        list.addNumber(5);
+        double result = list.getCalculationResult();
+        assertEquals(5.25, result, 0);
+    }
+
     @Test(expected= EquationMalformedException.class)
     public void shouldCalculateFalse() throws Exception {
         CalculationList list = new CalculationList();
