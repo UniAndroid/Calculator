@@ -30,7 +30,7 @@ abstract class CalculationOperator {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj.getClass() == this.getClass()) {
+        if (obj instanceof CalculationOperator) {
             return Objects.equals(((CalculationOperator) obj).getValue(), value);
         }
         return super.equals(obj);

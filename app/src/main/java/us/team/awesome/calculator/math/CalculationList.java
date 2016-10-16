@@ -18,10 +18,6 @@ public class CalculationList extends LinkedList {
         super();
     }
 
-    public CalculationList(LinkedList list) {
-        super(list);
-    }
-
     public void addNumber(int num) {
         if (!isEmpty() && getLast() instanceof CalculationNumber) {
             CalculationNumber numInstance = (CalculationNumber) getLast();
@@ -32,7 +28,7 @@ public class CalculationList extends LinkedList {
         }
     }
 
-    public void addNumber(String num){
+    public void addNumber(String num) {
         int _num = Integer.parseInt(num);
         this.addNumber(_num);
     }
@@ -69,9 +65,7 @@ public class CalculationList extends LinkedList {
 
     public double getCalculationResult() throws EquationMalformedException {
         try {
-            // CalculationList list = new CalculationList(this);
-            // TODO: Call By Reference auflösen => getNextOperatorToCalculate()
-            return calculate(this);
+            return calculate((CalculationList) this.clone());
         } catch (IndexOutOfBoundsException e) {
             // String aus strings.xml auslesen, dafür ist der context nötigt
             // , kann beim aufruf durch activity mitgegeben werden
@@ -89,40 +83,40 @@ public class CalculationList extends LinkedList {
             return 0;
         }
 
-        int index = getNextOperatorToCalculate();
+        int index = getNextOperatorToCalculate(list);
         if (index > 0) {
             CalculationOperator operator = (CalculationOperator) list.get(index);
-            CalculationList _list = operator.calculate(index, list);
-            return calculate(_list);
+            list = operator.calculate(index, list);
+            return calculate(list);
         } else {
             return ((CalculationNumber) list.getFirst()).getValue();
         }
     }
 
-    private int getNextOperatorToCalculate() {
+    private int getNextOperatorToCalculate(CalculationList list) {
         //erstmal nur * und /
-        int index = getFirstDotOperator();
+        int index = getFirstDotOperator(list);
         if (index != -1) {
             return index;
         }
-        index = getFirstLineOperator();
+        index = getFirstLineOperator(list);
         if (index != -1) {
             return index;
         }
         return -1;
     }
 
-    private int getFirstDotOperator() {
-        return getFirstOperatorOf(new TimesOperator(), new DivideOperator());
+    private int getFirstDotOperator(CalculationList list) {
+        return getFirstOperatorOf(new TimesOperator(), new DivideOperator(), list);
     }
 
-    private int getFirstLineOperator() {
-        return getFirstOperatorOf(new AddOperator(), new SubtractOperator());
+    private int getFirstLineOperator(CalculationList list) {
+        return getFirstOperatorOf(new AddOperator(), new SubtractOperator(), list);
     }
 
-    private int getFirstOperatorOf(CalculationOperator operator1, CalculationOperator operator2) {
-        int op1Index = indexOf(operator1);
-        int op2Index = indexOf(operator2);
+    private int getFirstOperatorOf(CalculationOperator operator1, CalculationOperator operator2, CalculationList list) {
+        int op1Index = list.indexOf(operator1);
+        int op2Index = list.indexOf(operator2);
         if (hasNoOperator(op1Index, op2Index)) {
             return -1;
         } else if (op1BeforeOp2(op1Index, op2Index)) {

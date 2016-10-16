@@ -139,10 +139,11 @@ public class CalculationListUnitTest {
         list.addNumber(2);
         list.addTimesOperator();
         list.addNumber(5);
-        list.getCalculationResult();
+        double result = list.getCalculationResult();
+        assertEquals(10.0, result, 0);
         list.addDecimalPoint();
         list.addNumber(1);
-        double result = list.getCalculationResult();
+        result = list.getCalculationResult();
         assertEquals(10.2, result, 0);
     }
 
