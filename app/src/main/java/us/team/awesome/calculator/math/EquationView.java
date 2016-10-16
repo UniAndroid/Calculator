@@ -21,8 +21,6 @@ import us.team.awesome.calculator.util.MathException;
  */
 public class EquationView extends LinkedList {
 
-    private boolean decimalPointAdded = false;
-
     public EquationView() {
         super();
     }
@@ -30,8 +28,7 @@ public class EquationView extends LinkedList {
     public void addNumber(int num) {
         if (!isEmpty() && getLast() instanceof CalculationNumber) {
             CalculationNumber numInstance = (CalculationNumber) getLast();
-            numInstance.attacheNumber(num, decimalPointAdded);
-            unsetDecimalPointAdded();
+            numInstance.attacheNumber(num);
         } else {
             add(new CalculationNumber(num));
         }
@@ -59,17 +56,11 @@ public class EquationView extends LinkedList {
     }
 
     public void addDecimalPoint() {
-        if (!isEmpty() && getLast() instanceof CalculationNumber) {
-            CalculationNumber _num = (CalculationNumber) getLast();
-            if (_num.hasNoDecimalDigits()) {
-                setDecimalPointAdded();
-            } else {
-                unsetDecimalPointAdded();
-            }
-        } else {
+        if (isEmpty() || !(getLast() instanceof CalculationNumber)) {
             addNumber(0);
-            setDecimalPointAdded();
         }
+        CalculationNumber _num = (CalculationNumber) getLast();
+        _num.attachDecimalPoint();
     }
 
     public double calculateEquation() throws EquationMalformedException {
@@ -94,18 +85,18 @@ public class EquationView extends LinkedList {
         for (int i = 0; i < size; i++) {
             Object o = this.get(i);
             sb.append(o.toString());
-            if (i == size - 1 && decimalPointAdded) {
-                sb.append(".");
-            }
+//            if (i == size - 1 && hasNumberDecimalPoint(o)) {
+//                sb.append(".");
+//            }
         }
         return sb.toString();
     }
 
-    private void setDecimalPointAdded() {
-        decimalPointAdded = true;
-    }
-
-    private void unsetDecimalPointAdded() {
-        decimalPointAdded = false;
+    private boolean hasNumberDecimalPoint(Object o){
+        if(o instanceof CalculationNumber){
+            CalculationNumber number = (CalculationNumber) o;
+            return number.hasDecimalPoint();
+        }
+        return false;
     }
 }

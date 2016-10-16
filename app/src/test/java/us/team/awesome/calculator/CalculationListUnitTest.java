@@ -146,6 +146,17 @@ public class CalculationListUnitTest {
         assertEquals(10.2, result, 0);
     }
 
+    @Test
+    public void shouldCalculateCorrectly10() throws Exception {
+        EquationView list = new EquationView();
+        list.addNumber(2);
+        list.addDecimalPoint();
+        list.addNumber(0);
+        list.addNumber(1);
+        double result = list.calculateEquation();
+        assertEquals(2.01, result, 0);
+    }
+
     @Test(expected= EquationMalformedException.class)
     public void shouldCalculateFalse() throws Exception {
         EquationView list = new EquationView();

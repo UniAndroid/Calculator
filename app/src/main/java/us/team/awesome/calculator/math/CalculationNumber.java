@@ -6,14 +6,18 @@ package us.team.awesome.calculator.math;
 
 class CalculationNumber {
 
-    private double value;
+    private String value;
+
+    CalculationNumber(int num) {
+        this.value = Integer.toString(num);
+    }
 
     CalculationNumber(double num) {
-        this.value = num;
+        this.value = Double.toString(num);
     }
 
     double getValue() {
-        return value;
+        return Double.parseDouble(value);
     }
 
     /**
@@ -27,33 +31,22 @@ class CalculationNumber {
      * ~ 11.25, 5 -> 11.255</p>
      *
      * @param attachNum the Integer that should be attached to value
-     * @param toDecimal should the Integer be attached to the decimals
      */
-    void attacheNumber(int attachNum, boolean toDecimal) {
-        // TODO wenn ein komma eingefügt wird und danach eine null, verschwindet das komma wieder
-        // es sind also Zahlen wie 1.06 nicht möglich. kann durch zwischenspeicher gelöst werden
-
-        StringBuilder sb = new StringBuilder(2);
-        if (hasNoDecimalDigits()) {
-            sb.append((int) value);
-        } else {
-            sb.append(value);
-        }
-        if (toDecimal) {
-            sb.append(".");
-        }
-        sb.append(attachNum);
-        this.value = Double.parseDouble(sb.toString());
+    void attacheNumber(int attachNum) {
+        this.value += Integer.toString(attachNum);
     }
 
-    boolean hasNoDecimalDigits() {
-        return value % 1 == 0;
+    void attachDecimalPoint() {
+        if(!value.contains(".")){
+            this.value += ".";
+        }
+    }
+
+    boolean hasDecimalPoint() {
+        return getValue() % 1 != 0;
     }
 
     public String toString() {
-        if(hasNoDecimalDigits()){
-            return Integer.toString((int) value);
-        }
-        return Double.toString(value);
+        return value;
     }
 }
