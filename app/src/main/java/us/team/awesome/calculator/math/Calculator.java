@@ -51,7 +51,7 @@ class Calculator {
     }
 
     private int getFirstDotOperator() {
-        return getFirstOperatorOf(new TimesOperator(), new DivideOperator());
+        return getFirstOperatorOf(new MultiplyOperator(), new DivideOperator());
     }
 
     private int getFirstLineOperator() {

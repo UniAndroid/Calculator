@@ -137,53 +137,43 @@ public class MainActivity extends AppCompatActivity
         Button clickedButton = (Button) view;
         String number = (String) clickedButton.getText();
         equationView.addNumber(number);
-        if(calculationTextView.getText().length() == 1 && calculationTextView.getText().charAt(0) == '0'){
-            calculationTextView.setText(number);
-        } else {
-            calculationTextView.setText(calculationTextView.getText() + number);
-        }
+        calculationTextView.setText(equationView.toString());
     }
 
-    public void  multiplyClickedListener(View view) {
-        String operator = getButtonSign(view);
-        calculationTextView.setText(calculationTextView.getText() + operator);
-        equationView.addTimesOperator();
+    public void multiplyClickedListener(View view) {
+        equationView.addMultiplyOperator();
+        calculationTextView.setText(equationView.toString());
     }
 
-    public void  divideClickedListener(View view) {
-        String operator = getButtonSign(view);
-        calculationTextView.setText(calculationTextView.getText() + operator);
+    public void divideClickedListener(View view) {
         equationView.addDivideOperator();
+        calculationTextView.setText(equationView.toString());
     }
 
-    public void  addClickedListener(View view) {
-        String operator = getButtonSign(view);
-        calculationTextView.setText(calculationTextView.getText() + operator);
+    public void addClickedListener(View view) {
         equationView.addAddOperator();
+        calculationTextView.setText(equationView.toString());
     }
 
-    public void  subtractClickedListener(View view) {
-        String operator = getButtonSign(view);
-        calculationTextView.setText(calculationTextView.getText() + operator);
+    public void subtractClickedListener(View view) {
         equationView.addSubtractOperator();
+        calculationTextView.setText(equationView.toString());
     }
 
     public void colonClickedListener(View view) {
-        String colon = getButtonSign(view);
-        calculationTextView.setText(calculationTextView.getText() + colon);
         equationView.addDecimalPoint();
-
+        calculationTextView.setText(equationView.toString());
     }
 
     public void calculateClickedListener(View view) {
         try {
-            Log.d("DEBUG", "Result: "+ equationView.calculateEquation() + " | From: " + equationView);
+            Log.d("DEBUG", "Result: " + equationView.calculateEquation() + " | From: " + equationView);
         } catch (EquationMalformedException e) {
             e.printStackTrace();
         }
     }
 
-    private String getButtonSign(View view){
-        return (String) ((Button)view).getText();
+    private String getButtonSign(View view) {
+        return (String) ((Button) view).getText();
     }
 }

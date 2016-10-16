@@ -70,7 +70,7 @@ public class CalculationListUnitTest {
         list.addNumber(10);
         list.addAddOperator();
         list.addNumber(-10);
-        list.addTimesOperator();
+        list.addMultiplyOperator();
         list.addNumber(2);
         list.addAddOperator();
         list.addNumber(10);
@@ -136,7 +136,7 @@ public class CalculationListUnitTest {
     public void shouldCalculateCorrectly9() throws Exception {
         EquationView list = new EquationView();
         list.addNumber(2);
-        list.addTimesOperator();
+        list.addMultiplyOperator();
         list.addNumber(5);
         double result = list.calculateEquation();
         assertEquals(10.0, result, 0);
@@ -178,7 +178,7 @@ public class CalculationListUnitTest {
         list.addNumber(19);
         list.addSubtractOperator();
         list.addNumber(10);
-        list.addTimesOperator();
+        list.addMultiplyOperator();
         list.addNumber(3);
         return list;
     }

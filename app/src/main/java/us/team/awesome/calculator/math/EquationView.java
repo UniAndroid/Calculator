@@ -14,8 +14,10 @@ import us.team.awesome.calculator.util.MathException;
  * The <code>EquationView</code> handles the form of the equation.
  * It ensures that the structure is correct. E.g. after an operator comes no other operator.
  * For more details in its behavior, look up the different <code>add...</code>-Methods.
- *
+ * <p>
  * It also returns the result of the calculated equation.
+ * <p>
+ * To get a proper formatted String of the equation, call <code>toString</code>.
  */
 public class EquationView extends LinkedList {
 
@@ -48,8 +50,8 @@ public class EquationView extends LinkedList {
         add(new SubtractOperator());
     }
 
-    public void addTimesOperator() {
-        add(new TimesOperator());
+    public void addMultiplyOperator() {
+        add(new MultiplyOperator());
     }
 
     public void addDivideOperator() {
@@ -84,6 +86,19 @@ public class EquationView extends LinkedList {
             e.printStackTrace();
             throw new EquationMalformedException("Es darf nicht durch 0 geteilt werden.", e);
         }
+    }
+
+    public String toString() {
+        int size = this.size();
+        StringBuilder sb = new StringBuilder(size);
+        for (int i = 0; i < size; i++) {
+            Object o = this.get(i);
+            sb.append(o.toString());
+            if (i == size - 1 && decimalPointAdded) {
+                sb.append(".");
+            }
+        }
+        return sb.toString();
     }
 
     private void setDecimalPointAdded() {

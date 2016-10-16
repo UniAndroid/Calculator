@@ -4,9 +4,9 @@ package us.team.awesome.calculator.math;
  * Created by Stefan on 14.10.2016.
  */
 
-class TimesOperator extends CalculationOperator {
+class MultiplyOperator extends CalculationOperator {
 
-    TimesOperator() {
+    MultiplyOperator() {
         super("*");
     }
 
