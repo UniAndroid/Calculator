@@ -85,18 +85,7 @@ public class EquationView extends LinkedList {
         for (int i = 0; i < size; i++) {
             Object o = this.get(i);
             sb.append(o.toString());
-//            if (i == size - 1 && hasNumberDecimalPoint(o)) {
-//                sb.append(".");
-//            }
         }
         return sb.toString();
-    }
-
-    private boolean hasNumberDecimalPoint(Object o){
-        if(o instanceof CalculationNumber){
-            CalculationNumber number = (CalculationNumber) o;
-            return number.hasDecimalPoint();
-        }
-        return false;
     }
 }
