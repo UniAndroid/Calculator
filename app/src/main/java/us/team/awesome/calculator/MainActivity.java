@@ -14,7 +14,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
-import us.team.awesome.calculator.math.CalculationList;
+import us.team.awesome.calculator.math.EquationView;
 import us.team.awesome.calculator.util.EquationMalformedException;
 
 public class MainActivity extends AppCompatActivity
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity
     private Button sevenButton, eightButton, nineButton, addButton, substractButton, collonButton;
     private Button clearButton, multiplyButton, divideButton;
 
-    private CalculationList calculationList;
+    private EquationView equationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         this.calculationTextView = (TextView) findViewById(R.id.calculationTextView);
-        this.calculationList = new CalculationList();
+        this.equationView = new EquationView();
 
 
         this.zeroButton = (Button) findViewById(R.id.zeroButton);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onClick(View view) {
-                calculationList = new CalculationList();
+                equationView = new EquationView();
                 calculationTextView.setText("0");
             }
         });
@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity
     public void numberClickedListener(View view) {
         Button clickedButton = (Button) view;
         String number = (String) clickedButton.getText();
-        calculationList.addNumber(number);
+        equationView.addNumber(number);
         if(calculationTextView.getText().length() == 1 && calculationTextView.getText().charAt(0) == '0'){
             calculationTextView.setText(number);
         } else {
@@ -147,37 +147,37 @@ public class MainActivity extends AppCompatActivity
     public void  multiplyClickedListener(View view) {
         String operator = getButtonSign(view);
         calculationTextView.setText(calculationTextView.getText() + operator);
-        calculationList.addTimesOperator();
+        equationView.addTimesOperator();
     }
 
     public void  divideClickedListener(View view) {
         String operator = getButtonSign(view);
         calculationTextView.setText(calculationTextView.getText() + operator);
-        calculationList.addDivideOperator();
+        equationView.addDivideOperator();
     }
 
     public void  addClickedListener(View view) {
         String operator = getButtonSign(view);
         calculationTextView.setText(calculationTextView.getText() + operator);
-        calculationList.addAddOperator();
+        equationView.addAddOperator();
     }
 
     public void  subtractClickedListener(View view) {
         String operator = getButtonSign(view);
         calculationTextView.setText(calculationTextView.getText() + operator);
-        calculationList.addSubtractOperator();
+        equationView.addSubtractOperator();
     }
 
     public void colonClickedListener(View view) {
         String colon = getButtonSign(view);
         calculationTextView.setText(calculationTextView.getText() + colon);
-        calculationList.addDecimalPoint();
+        equationView.addDecimalPoint();
 
     }
 
     public void calculateClickedListener(View view) {
         try {
-            Log.d("Calculation Result", ""+calculationList.getCalculationResult());
+            Log.d("DEBUG", "Result: "+ equationView.calculateEquation() + " | From: " + equationView);
         } catch (EquationMalformedException e) {
             e.printStackTrace();
         }

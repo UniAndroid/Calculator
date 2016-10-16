@@ -20,11 +20,11 @@ abstract class CalculationOperator {
         return value;
     }
 
-    double getNumberBeforeOperator(int index, CalculationList list) {
+    double getNumberBeforeOperator(int index, EquationView list) {
         return ((CalculationNumber) list.get(index - 1)).getValue();
     }
 
-    double getNumberAfterOperator(int index, CalculationList list) {
+    double getNumberAfterOperator(int index, EquationView list) {
         return ((CalculationNumber) list.get(index + 1)).getValue();
     }
 
@@ -36,5 +36,9 @@ abstract class CalculationOperator {
         return super.equals(obj);
     }
 
-    abstract CalculationList calculate(int index, CalculationList list) throws MathException;
+    abstract EquationView calculate(int index, EquationView list) throws MathException;
+
+    public String toString(){
+        return value;
+    }
 }

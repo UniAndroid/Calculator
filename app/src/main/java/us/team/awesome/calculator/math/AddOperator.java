@@ -11,7 +11,7 @@ class AddOperator extends CalculationOperator{
     }
 
     @Override
-    CalculationList calculate(int index, CalculationList list) {
+    EquationView calculate(int index, EquationView list) {
         double firstNumber = getNumberBeforeOperator(index, list);
         double secondNumber = getNumberAfterOperator(index, list);
         double result = firstNumber + secondNumber;

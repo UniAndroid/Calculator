@@ -13,7 +13,7 @@ class DivideOperator extends CalculationOperator {
     }
 
     @Override
-    CalculationList calculate(int index, CalculationList list) throws DivideByZeroException {
+    EquationView calculate(int index, EquationView list) throws DivideByZeroException {
         double firstNumber = getNumberBeforeOperator(index, list);
         double secondNumber = getNumberAfterOperator(index, list);
         double result = firstNumber / secondNumber;

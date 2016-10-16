@@ -45,4 +45,8 @@ class CalculationNumber {
     boolean hasNoDecimalDigits() {
         return value % 1 == 0;
     }
+
+    public String toString(){
+        return Double.toString(value);
+    }
 }
