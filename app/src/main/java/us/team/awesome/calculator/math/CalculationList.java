@@ -2,6 +2,10 @@ package us.team.awesome.calculator.math;
 
 import java.util.LinkedList;
 
+import us.team.awesome.calculator.math.operators.basic.AddOperator;
+import us.team.awesome.calculator.math.operators.basic.DivideOperator;
+import us.team.awesome.calculator.math.operators.basic.MultiplyOperator;
+import us.team.awesome.calculator.math.operators.basic.SubtractOperator;
 import us.team.awesome.calculator.util.DivideByZeroException;
 import us.team.awesome.calculator.util.EquationMalformedException;
 import us.team.awesome.calculator.util.MathException;
@@ -11,7 +15,7 @@ import us.team.awesome.calculator.util.MathException;
  */
 
 /**
- * The <code>EquationView</code> handles the form of the equation.
+ * The <code>CalculationList</code> handles the form of the equation.
  * It ensures that the structure is correct. E.g. after an operator comes no other operator.
  * For more details in its behavior, look up the different <code>add...</code>-Methods.
  * <p>
@@ -19,9 +23,9 @@ import us.team.awesome.calculator.util.MathException;
  * <p>
  * To get a proper formatted String of the equation, call <code>toString</code>.
  */
-public class EquationView extends LinkedList {
+public class CalculationList extends LinkedList {
 
-    public EquationView() {
+    public CalculationList() {
         super();
     }
 

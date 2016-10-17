@@ -4,7 +4,7 @@ package us.team.awesome.calculator.math;
  * Created by Stefan on 14.10.2016.
  */
 
-class CalculationNumber {
+public class CalculationNumber {
 
     private String value;
 
@@ -12,11 +12,11 @@ class CalculationNumber {
         this.value = Integer.toString(num);
     }
 
-    CalculationNumber(double num) {
+    public CalculationNumber(double num) {
         this.value = Double.toString(num);
     }
 
-    double getValue() {
+    public double getValue() {
         return Double.parseDouble(value);
     }
 
@@ -32,17 +32,17 @@ class CalculationNumber {
      *
      * @param attachNum the Integer that should be attached to value
      */
-    void attacheNumber(int attachNum) {
+    public void attacheNumber(int attachNum) {
         this.value += Integer.toString(attachNum);
     }
 
-    void attachDecimalPoint() {
+    public void attachDecimalPoint() {
         if(!value.contains(".")){
             this.value += ".";
         }
     }
 
-    boolean hasDecimalPoint() {
+    public boolean hasDecimalPoint() {
         return getValue() % 1 != 0;
     }
 

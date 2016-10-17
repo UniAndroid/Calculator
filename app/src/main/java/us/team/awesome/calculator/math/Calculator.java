@@ -1,5 +1,10 @@
 package us.team.awesome.calculator.math;
 
+import us.team.awesome.calculator.math.operators.CalculationOperator;
+import us.team.awesome.calculator.math.operators.basic.AddOperator;
+import us.team.awesome.calculator.math.operators.basic.DivideOperator;
+import us.team.awesome.calculator.math.operators.basic.MultiplyOperator;
+import us.team.awesome.calculator.math.operators.basic.SubtractOperator;
 import us.team.awesome.calculator.util.MathException;
 
 /**
@@ -7,22 +12,22 @@ import us.team.awesome.calculator.util.MathException;
  */
 
 /**
- * The Calculator calculates a equation given by an EquationView.
- * The original EquationView is not altered.
+ * The Calculator calculates a equation given by an CalculationList.
+ * The original CalculationList is not altered.
  */
 class Calculator {
 
-    private EquationView equation;
+    private CalculationList equation;
 
-    Calculator(EquationView equation) {
-        this.equation =(EquationView)equation.clone();
+    Calculator(CalculationList equation) {
+        this.equation =(CalculationList)equation.clone();
     }
 
     double getCalculationResult() throws MathException {
         return calculate(equation);
     }
 
-    private double calculate(EquationView list) throws MathException {
+    private double calculate(CalculationList list) throws MathException {
         if (list.isEmpty()) {
             return 0;
         }

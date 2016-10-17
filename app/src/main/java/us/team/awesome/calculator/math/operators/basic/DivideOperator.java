@@ -1,19 +1,22 @@
-package us.team.awesome.calculator.math;
+package us.team.awesome.calculator.math.operators.basic;
 
+import us.team.awesome.calculator.math.CalculationList;
+import us.team.awesome.calculator.math.CalculationNumber;
+import us.team.awesome.calculator.math.operators.CalculationOperator;
 import us.team.awesome.calculator.util.DivideByZeroException;
 
 /**
  * Created by Stefan on 14.10.2016.
  */
 
-class DivideOperator extends CalculationOperator {
+public class DivideOperator extends CalculationOperator {
 
-    DivideOperator() {
+    public DivideOperator() {
         super("/");
     }
 
     @Override
-    EquationView calculate(int index, EquationView list) throws DivideByZeroException {
+    public CalculationList calculate(int index, CalculationList list) throws DivideByZeroException {
         double firstNumber = getNumberBeforeOperator(index, list);
         double secondNumber = getNumberAfterOperator(index, list);
         double result = firstNumber / secondNumber;

@@ -1,4 +1,4 @@
-package us.team.awesome.calculator;
+package us.team.awesome.calculator.activities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -12,19 +12,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
-import android.widget.TextView;
 
-import us.team.awesome.calculator.math.EquationView;
+import us.team.awesome.calculator.R;
+import us.team.awesome.calculator.components.EquationView;
+import us.team.awesome.calculator.math.CalculationList;
 import us.team.awesome.calculator.util.EquationMalformedException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private TextView calculationTextView;
     private Button zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton;
     private Button sevenButton, eightButton, nineButton, addButton, substractButton, collonButton;
     private Button clearButton, multiplyButton, divideButton;
-
     private EquationView equationView;
 
     @Override
@@ -43,9 +42,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        this.calculationTextView = (TextView) findViewById(R.id.calculationTextView);
-        this.equationView = new EquationView();
-
+        this.equationView = (EquationView) findViewById(R.id.equationView);
 
         this.zeroButton = (Button) findViewById(R.id.zeroButton);
         this.oneButton = (Button) findViewById(R.id.oneButton);
@@ -70,8 +67,7 @@ public class MainActivity extends AppCompatActivity
 
             @Override
             public void onClick(View view) {
-                equationView = new EquationView();
-                calculationTextView.setText("0");
+                equationView.clear();
             }
         });
     }
@@ -137,40 +133,30 @@ public class MainActivity extends AppCompatActivity
         Button clickedButton = (Button) view;
         String number = (String) clickedButton.getText();
         equationView.addNumber(number);
-        calculationTextView.setText(equationView.toString());
     }
 
     public void multiplyClickedListener(View view) {
         equationView.addMultiplyOperator();
-        calculationTextView.setText(equationView.toString());
     }
 
     public void divideClickedListener(View view) {
         equationView.addDivideOperator();
-        calculationTextView.setText(equationView.toString());
     }
 
     public void addClickedListener(View view) {
         equationView.addAddOperator();
-        calculationTextView.setText(equationView.toString());
     }
 
     public void subtractClickedListener(View view) {
         equationView.addSubtractOperator();
-        calculationTextView.setText(equationView.toString());
     }
 
     public void colonClickedListener(View view) {
         equationView.addDecimalPoint();
-        calculationTextView.setText(equationView.toString());
     }
 
     public void calculateClickedListener(View view) {
-        try {
-            Log.d("DEBUG", "Result: " + equationView.calculateEquation() + " | From: " + equationView);
-        } catch (EquationMalformedException e) {
-            e.printStackTrace();
-        }
+        equationView.calculate();
     }
 
     private String getButtonSign(View view) {

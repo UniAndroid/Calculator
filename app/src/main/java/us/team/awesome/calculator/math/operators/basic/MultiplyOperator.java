@@ -1,20 +1,24 @@
-package us.team.awesome.calculator.math;
+package us.team.awesome.calculator.math.operators.basic;
+
+import us.team.awesome.calculator.math.CalculationList;
+import us.team.awesome.calculator.math.CalculationNumber;
+import us.team.awesome.calculator.math.operators.CalculationOperator;
 
 /**
  * Created by Stefan on 14.10.2016.
  */
 
-class SubtractOperator extends CalculationOperator {
+public class MultiplyOperator extends CalculationOperator {
 
-    SubtractOperator() {
-        super("-");
+    public MultiplyOperator() {
+        super("*");
     }
 
     @Override
-    EquationView calculate(int index, EquationView list) {
+    public CalculationList calculate(int index, CalculationList list) {
         double firstNumber = getNumberBeforeOperator(index, list);
         double secondNumber = getNumberAfterOperator(index, list);
-        double result = firstNumber - secondNumber;
+        double result = firstNumber * secondNumber;
         list.remove(index - 1); // remove firstNumber
         index -= 1; // lower index because operator shift to the left
         list.remove(index + 1); // remove secondNumber

@@ -1,30 +1,31 @@
-package us.team.awesome.calculator.math;
+package us.team.awesome.calculator.math.operators;
 
 import java.util.Objects;
 
-import us.team.awesome.calculator.util.DivideByZeroException;
+import us.team.awesome.calculator.math.CalculationList;
+import us.team.awesome.calculator.math.CalculationNumber;
 import us.team.awesome.calculator.util.MathException;
 
 /**
  * Created by Stefan on 14.10.2016.
  */
 
-abstract class CalculationOperator {
+public abstract class CalculationOperator {
     private String value;
 
-    CalculationOperator(String value) {
+    public CalculationOperator(String value) {
         this.value = value;
     }
 
-    String getValue() {
+    public String getValue() {
         return value;
     }
 
-    double getNumberBeforeOperator(int index, EquationView list) {
+    public double getNumberBeforeOperator(int index, CalculationList list) {
         return ((CalculationNumber) list.get(index - 1)).getValue();
     }
 
-    double getNumberAfterOperator(int index, EquationView list) {
+    public double getNumberAfterOperator(int index, CalculationList list) {
         return ((CalculationNumber) list.get(index + 1)).getValue();
     }
 
@@ -36,7 +37,7 @@ abstract class CalculationOperator {
         return super.equals(obj);
     }
 
-    abstract EquationView calculate(int index, EquationView list) throws MathException;
+    public abstract CalculationList calculate(int index, CalculationList list) throws MathException;
 
     public String toString(){
         return value;
