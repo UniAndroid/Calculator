@@ -13,6 +13,7 @@ import android.widget.TextView;
 import us.team.awesome.calculator.R;
 import us.team.awesome.calculator.math.CalculationList;
 import us.team.awesome.calculator.util.EquationMalformedException;
+import us.team.awesome.calculator.util.MathException;
 
 /**
  * Created by JWO on 17.10.2016.
@@ -31,7 +32,7 @@ public class EquationView extends View{
     public EquationView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
-        this.calculationList = new CalculationList();
+        this.calculationList = new CalculationList(true);
     }
 
     protected void onDraw(Canvas canvas) {
@@ -96,8 +97,18 @@ public class EquationView extends View{
         this.updateEquation();
     }
 
+    public void addLeftBracket() {
+        this.calculationList.addLeftBracket();
+        this.updateEquation();
+    }
+
+    public void addRightBracket() {
+        this.calculationList.addRightBracket();
+        this.updateEquation();
+    }
+
     public void clear(){
-        this.calculationList = new CalculationList();
+        this.calculationList = new CalculationList(true);
         this.ergebnisString = "";
         this.updateEquation();
     }
@@ -111,7 +122,7 @@ public class EquationView extends View{
                 this.ergebnisString = "" + this.calculationList.calculateEquation();
             }
             this.invalidate();
-        } catch (EquationMalformedException e) {
+        } catch (MathException e) {
             this.ergebnisString = "ERROR";
             e.printStackTrace();
         }

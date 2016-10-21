@@ -13,7 +13,11 @@ public class CalculationNumber {
     }
 
     public CalculationNumber(double num) {
-        this.value = Double.toString(num);
+        if(num % 1 == 0) {
+            this.value = Integer.toString((int)num);
+        }else{
+            this.value = Double.toString(num);
+        }
     }
 
     public double getValue() {

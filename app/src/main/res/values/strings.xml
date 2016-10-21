@@ -26,4 +26,6 @@
     <string name="clearSign">C</string>
 
     <string name="malformedException">Die Gleichung ist nicht korrekt aufgebaut.</string>
+    <string name="bracketLeft">(</string>
+    <string name="bracketRight">)</string>
 </resources>

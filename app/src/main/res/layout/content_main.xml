@@ -38,12 +38,22 @@
         android:layout_below="@id/equationView"
         android:weightSum="4">
         <Button
-            android:id="@+id/clearButton"
+            android:id="@+id/bracketLeftButton"
             style="@style/defaultTextSize"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3"
-            android:text="@string/clearSign">
+            android:layout_weight="1"
+            android:onClick="bracketLeftClickedListener"
+            android:text="@string/bracketLeft">
+        </Button>
+        <Button
+            android:id="@+id/bracketRightButton"
+            style="@style/defaultTextSize"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:onClick="bracketRightClickedListener"
+            android:text="@string/bracketRight">
         </Button>
         <Button
             android:id="@+id/divideButton"
@@ -53,6 +63,14 @@
             android:layout_weight="1"
             android:onClick="divideClickedListener"
             android:text="@string/divideSign">
+        </Button>
+        <Button
+            android:id="@+id/clearButton"
+            style="@style/defaultTextSize"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/clearSign">
         </Button>
     </LinearLayout>
     <LinearLayout

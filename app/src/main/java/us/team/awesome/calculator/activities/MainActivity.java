@@ -159,6 +159,14 @@ public class MainActivity extends AppCompatActivity
         equationView.calculate();
     }
 
+    public void bracketLeftClickedListener(View view) {
+        equationView.addLeftBracket();
+    }
+
+    public void bracketRightClickedListener(View view) {
+        equationView.addRightBracket();
+    }
+
     private String getButtonSign(View view) {
         return (String) ((Button) view).getText();
     }

@@ -1,6 +1,7 @@
 package us.team.awesome.calculator.math;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 import us.team.awesome.calculator.math.operators.basic.AddOperator;
 import us.team.awesome.calculator.math.operators.basic.DivideOperator;
@@ -25,61 +26,120 @@ import us.team.awesome.calculator.util.MathException;
  */
 public class CalculationList extends LinkedList {
 
-    public CalculationList() {
+    /**
+     * isComplete indicates if the CalculationList has both brackets
+     * e.g. if first bracket is set, isComplete is false. Now every add... Method adds to this
+     * CalculationList. When the closing bracket is set, isComplete is true and every add... Method
+     * adds to the parent CalculationList.
+     */
+    private boolean isComplete;
+
+    public CalculationList(boolean isComplete) {
         super();
+        this.isComplete = isComplete;
     }
 
     public void addNumber(int num) {
-        if (!isEmpty() && getLast() instanceof CalculationNumber) {
-            CalculationNumber numInstance = (CalculationNumber) getLast();
-            numInstance.attacheNumber(num);
+        if (lastIsUncompleteCalculationList()) {
+            CalculationList last = (CalculationList) getLast();
+            last.addNumber(num);
         } else {
-            add(new CalculationNumber(num));
+            if (!isEmpty() && getLast() instanceof CalculationNumber) {
+                CalculationNumber numInstance = (CalculationNumber) getLast();
+                numInstance.attacheNumber(num);
+            } else {
+                add(new CalculationNumber(num));
+            }
         }
     }
 
     public void addNumber(String num) {
-        int _num = Integer.parseInt(num);
-        this.addNumber(_num);
+        if (lastIsUncompleteCalculationList()) {
+            CalculationList last = (CalculationList) getLast();
+            last.addNumber(num);
+        } else {
+            int _num = Integer.parseInt(num);
+            this.addNumber(_num);
+        }
     }
 
     public void addAddOperator() {
-        add(new AddOperator());
+        if (lastIsUncompleteCalculationList()) {
+            CalculationList last = (CalculationList) getLast();
+            last.addAddOperator();
+        } else {
+            add(new AddOperator());
+        }
     }
 
     public void addSubtractOperator() {
-        add(new SubtractOperator());
+        if (lastIsUncompleteCalculationList()) {
+            CalculationList last = (CalculationList) getLast();
+            last.addSubtractOperator();
+        } else {
+            add(new SubtractOperator());
+        }
     }
 
     public void addMultiplyOperator() {
-        add(new MultiplyOperator());
+        if (lastIsUncompleteCalculationList()) {
+            CalculationList last = (CalculationList) getLast();
+            last.addMultiplyOperator();
+        } else {
+            add(new MultiplyOperator());
+        }
     }
 
     public void addDivideOperator() {
-        add(new DivideOperator());
+        if (lastIsUncompleteCalculationList()) {
+            CalculationList last = (CalculationList) getLast();
+            last.addDivideOperator();
+        } else {
+            add(new DivideOperator());
+        }
     }
 
     public void addDecimalPoint() {
-        if (isEmpty() || !(getLast() instanceof CalculationNumber)) {
-            addNumber(0);
+        if (lastIsUncompleteCalculationList()) {
+            CalculationList last = (CalculationList) getLast();
+            last.addDecimalPoint();
+        } else {
+            if (isEmpty() || !(getLast() instanceof CalculationNumber)) {
+                addNumber(0);
+            }
+            CalculationNumber _num = (CalculationNumber) getLast();
+            _num.attachDecimalPoint();
         }
-        CalculationNumber _num = (CalculationNumber) getLast();
-        _num.attachDecimalPoint();
     }
 
-    public double calculateEquation() throws EquationMalformedException {
+    public void addLeftBracket() {
+        if (lastIsUncompleteCalculationList()) {
+            CalculationList last = (CalculationList) getLast();
+            last.addLeftBracket();
+        } else {
+            add(new CalculationList(false));
+        }
+    }
+
+    public void addRightBracket() {
+        if (lastIsUncompleteCalculationList()) {
+            CalculationList last = (CalculationList) getLast();
+            last.addRightBracket();
+        } else {
+            setIsComplete(true);
+        }
+    }
+
+    public double calculateEquation() throws MathException {
         try {
             Calculator calculator = new Calculator(this);
             return calculator.getCalculationResult();
         } catch (IndexOutOfBoundsException e) {
             // String aus strings.xml auslesen, dafür ist der context nötigt
             // , kann beim aufruf durch activity mitgegeben werden
-            throw new EquationMalformedException("Die Gleichung ist nicht korrekt aufgebaut.", e);
+            throw new MathException("Die Gleichung ist nicht korrekt aufgebaut.", e);
         } catch (DivideByZeroException e) {
-            throw new EquationMalformedException("Es darf nicht durch 0 geteilt werden.", e);
-        } catch (MathException e) {
-            e.printStackTrace();
-            throw new EquationMalformedException("Es darf nicht durch 0 geteilt werden.", e);
+            throw new MathException("Es darf nicht durch 0 geteilt werden.", e);
         }
     }
 
@@ -91,9 +151,44 @@ public class CalculationList extends LinkedList {
         } else {
             for (int i = 0; i < size; i++) {
                 Object o = this.get(i);
-                sb.append(o.toString());
+                if (o instanceof CalculationList) {
+                    sb.append("(");
+                    sb.append(o.toString());
+                    sb.append(")");
+                } else {
+                    sb.append(o.toString());
+                }
             }
         }
         return sb.toString();
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setIsComplete(boolean isComplete) {
+        this.isComplete = isComplete;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof CalculationList || super.equals(obj);
+    }
+
+    /**
+     * This method returns true if the last item in this <code>CalculationList</code> is a
+     * <code>CalculationList</code> and <code>isComplete()</code> of same
+     * <code>CalculationList</code> returns false
+     *
+     * @return boolean, representing the state of the last CalculationList, if there is one.
+     */
+    private boolean lastIsUncompleteCalculationList() {
+        if (!isEmpty() && getLast() instanceof CalculationList) {
+            CalculationList last = (CalculationList) getLast();
+            return !last.isComplete();
+        } else {
+            return false;
+        }
     }
 }

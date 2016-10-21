@@ -5,6 +5,7 @@ import us.team.awesome.calculator.math.operators.basic.AddOperator;
 import us.team.awesome.calculator.math.operators.basic.DivideOperator;
 import us.team.awesome.calculator.math.operators.basic.MultiplyOperator;
 import us.team.awesome.calculator.math.operators.basic.SubtractOperator;
+import us.team.awesome.calculator.util.EquationMalformedException;
 import us.team.awesome.calculator.util.MathException;
 
 /**
@@ -20,7 +21,7 @@ class Calculator {
     private CalculationList equation;
 
     Calculator(CalculationList equation) {
-        this.equation =(CalculationList)equation.clone();
+        this.equation = (CalculationList) equation.clone();
     }
 
     double getCalculationResult() throws MathException {
@@ -32,6 +33,8 @@ class Calculator {
             return 0;
         }
 
+        executeBracketsFirst();
+
         int index = getNextOperatorToCalculate();
         if (index > 0) {
             CalculationOperator operator = (CalculationOperator) list.get(index);
@@ -42,8 +45,26 @@ class Calculator {
         }
     }
 
+    private void executeBracketsFirst() throws MathException {
+        while(true) {
+            int index = getNextBracket();
+            if (index != -1) {
+                CalculationList childList = (CalculationList) equation.get(index);
+                double result = childList.calculateEquation();
+                equation.set(index, new CalculationNumber(result));
+            }else{
+                break;
+            }
+        }
+    }
+
+    /**
+     * gets the index of the next operator that needs to be calculated.
+     * Sequence is: * : -> + -
+     *
+     * @return int representing the index of the next operator to calculate
+     */
     private int getNextOperatorToCalculate() {
-        //erstmal nur * und /
         int index = getFirstDotOperator();
         if (index != -1) {
             return index;
@@ -53,6 +74,10 @@ class Calculator {
             return index;
         }
         return -1;
+    }
+
+    private int getNextBracket() {
+        return equation.indexOf(new CalculationList(false));
     }
 
     private int getFirstDotOperator() {

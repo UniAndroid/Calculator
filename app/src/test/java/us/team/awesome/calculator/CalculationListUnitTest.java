@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import us.team.awesome.calculator.math.CalculationList;
 import us.team.awesome.calculator.util.EquationMalformedException;
+import us.team.awesome.calculator.util.MathException;
 
 import static org.junit.Assert.*;
 
@@ -20,7 +21,7 @@ public class CalculationListUnitTest {
     @Test
     public void shouldBeEmptyAfterInit() throws Exception {
         CalculationList list;
-        list = new CalculationList();
+        list = new CalculationList(true);
         assertEquals(0, list.size());
     }
 
@@ -33,7 +34,7 @@ public class CalculationListUnitTest {
 
     @Test
     public void shouldCalculateCorrectly1() throws Exception {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addNumber(19);
         list.addSubtractOperator();
         list.addNumber(10);
@@ -45,7 +46,7 @@ public class CalculationListUnitTest {
 
     @Test
     public void shouldCalculateCorrectly2() throws Exception {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addNumber(19);
         list.addSubtractOperator();
         list.addNumber(10);
@@ -64,7 +65,7 @@ public class CalculationListUnitTest {
 
     @Test
     public void shouldCalculateCorrectly4() throws Exception {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addNumber(19);
         list.addSubtractOperator();
         list.addNumber(10);
@@ -82,7 +83,7 @@ public class CalculationListUnitTest {
 
     @Test
     public void shouldCalculateCorrectly5() throws Exception {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addNumber(1);
         list.addNumber(2);
         list.addNumber(5);
@@ -94,7 +95,7 @@ public class CalculationListUnitTest {
 
     @Test
     public void shouldCalculateCorrectly6() throws Exception {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addNumber(1);
         list.addDecimalPoint();
         list.addNumber(2);
@@ -107,7 +108,7 @@ public class CalculationListUnitTest {
 
     @Test
     public void shouldCalculateCorrectly7() throws Exception {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addNumber(1);
         list.addDecimalPoint();
         list.addNumber(2);
@@ -121,7 +122,7 @@ public class CalculationListUnitTest {
 
     @Test
     public void shouldCalculateCorrectly8() throws Exception {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addDecimalPoint();
         list.addNumber(2);
         list.addDecimalPoint();
@@ -134,7 +135,7 @@ public class CalculationListUnitTest {
 
     @Test
     public void shouldCalculateCorrectly9() throws Exception {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addNumber(2);
         list.addMultiplyOperator();
         list.addNumber(5);
@@ -148,7 +149,7 @@ public class CalculationListUnitTest {
 
     @Test
     public void shouldCalculateCorrectly10() throws Exception {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addNumber(2);
         list.addDecimalPoint();
         list.addNumber(0);
@@ -157,9 +158,55 @@ public class CalculationListUnitTest {
         assertEquals(2.01, result, 0);
     }
 
-    @Test(expected= EquationMalformedException.class)
+    @Test
+    public void shouldBeFormedCorrect1() throws Exception {
+        CalculationList list = new CalculationList(true);
+        list.addNumber(2);
+        list.addDecimalPoint();
+        list.addNumber(0);
+        list.addNumber(1);
+        list.addMultiplyOperator();
+        list.addLeftBracket();
+        list.addNumber(1);
+        list.addAddOperator();
+        list.addNumber(2);
+        list.addRightBracket();
+        assertEquals("2.01*(1+2)", list.toString());
+        double result = list.calculateEquation();
+        assertEquals(6.03, result, 0);
+    }
+
+    @Test
+    public void shouldBeFormedCorrect2() throws Exception {
+        CalculationList list = new CalculationList(true);
+        list.addNumber(2);
+        list.addDecimalPoint();
+        list.addNumber(0);
+        list.addNumber(1);
+        list.addMultiplyOperator();
+// (
+        list.addLeftBracket();
+        list.addNumber(1);
+        list.addAddOperator();
+        list.addNumber(2);
+        list.addMultiplyOperator();
+//      (
+        list.addLeftBracket();
+        list.addNumber(5);
+        list.addAddOperator();
+        list.addNumber(1);
+        list.addRightBracket();
+//      )
+        list.addRightBracket();
+//  )
+        assertEquals("2.01*(1+2*(5+1))", list.toString());
+        double result = list.calculateEquation();
+        assertEquals(26.13, result, 0);
+    }
+
+    @Test(expected= MathException.class)
     public void shouldCalculateFalse() throws Exception {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addNumber(19);
         list.addSubtractOperator();
         list.addNumber(10);
@@ -167,9 +214,9 @@ public class CalculationListUnitTest {
         double result = list.calculateEquation();
     }
 
-    @Test(expected= EquationMalformedException.class)
+    @Test(expected= MathException.class)
     public void shouldCalculateFalse1() throws Exception {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addNumber(19);
         list.addDivideOperator();
         list.addNumber(0);
@@ -177,7 +224,7 @@ public class CalculationListUnitTest {
     }
 
     private CalculationList createExampleCalculationList() {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addNumber(19);
         list.addSubtractOperator();
         list.addNumber(10);
@@ -185,7 +232,7 @@ public class CalculationListUnitTest {
     }
 
     private CalculationList createExampleCalculationListWithDots() {
-        CalculationList list = new CalculationList();
+        CalculationList list = new CalculationList(true);
         list.addNumber(19);
         list.addSubtractOperator();
         list.addNumber(10);
