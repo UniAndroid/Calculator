@@ -1,6 +1,10 @@
 package us.team.awesome.calculator.components;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,25 +18,47 @@ import us.team.awesome.calculator.util.EquationMalformedException;
  * Created by JWO on 17.10.2016.
  */
 
-public class EquationView extends LinearLayout{
+public class EquationView extends View{
 
-    private View rootView;
+
+    private Paint backgroundPainter;
+    private Paint foregroundPainter;
+
+    private String ergebnisString = "";
 
     private CalculationList calculationList;
-    private TextView equationTextView, calculationResultTextView;
 
     public EquationView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
         this.calculationList = new CalculationList();
-        this.updateEquation();
+    }
+
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        canvas.drawRect(0, 0, getWidth(), getHeight(), backgroundPainter);
+        canvas.drawText(this.calculationList.toString(), 0,50,foregroundPainter);
+        if(!this.ergebnisString.isEmpty()){
+            canvas.drawText(this.ergebnisString, getWidth() - (this.ergebnisString.length()*30), getHeight()-50, foregroundPainter);
+        }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int w = MeasureSpec.getSize(widthMeasureSpec);
+        int h = MeasureSpec.getSize(heightMeasureSpec);
+        setMeasuredDimension(w, h);
     }
 
     private void init(Context context) {
-        rootView = inflate(context, R.layout.component_equation_view, this);
+        this.backgroundPainter = new Paint();
+        this.backgroundPainter.setStyle(Paint.Style.FILL);
+        this.backgroundPainter.setColor(Color.WHITE);
 
-        this.equationTextView = (TextView) rootView.findViewById(R.id.equationTextView);
-        this.calculationResultTextView = (TextView) rootView.findViewById(R.id.calculationResultTextView);
+        this.foregroundPainter = new Paint();
+        this.foregroundPainter.setStyle(Paint.Style.STROKE);
+        this.foregroundPainter.setColor(Color.BLACK);
+        this.foregroundPainter.setTextSize(50);
     }
 
     public void addNumber(int number){
@@ -72,6 +98,7 @@ public class EquationView extends LinearLayout{
 
     public void clear(){
         this.calculationList = new CalculationList();
+        this.ergebnisString = "";
         this.updateEquation();
     }
 
@@ -79,12 +106,13 @@ public class EquationView extends LinearLayout{
         try {
             double result = this.calculationList.calculateEquation();
             if(result % 1 == 0){
-                this.calculationResultTextView.setText("" + (int) this.calculationList.calculateEquation());
+                this.ergebnisString = "" + (int) this.calculationList.calculateEquation();
             }else {
-                this.calculationResultTextView.setText("" + this.calculationList.calculateEquation());
+                this.ergebnisString = "" + this.calculationList.calculateEquation();
             }
+            this.invalidate();
         } catch (EquationMalformedException e) {
-            this.calculationResultTextView.setText("ERROR");
+            this.ergebnisString = "ERROR";
             e.printStackTrace();
         }
     }
@@ -102,11 +130,11 @@ public class EquationView extends LinearLayout{
         this.updateEquation();
     }
 
+    /**
+     * Ruft die onDraw() Methode erneut auf
+     */
     private void updateEquation() {
-        if(this.calculationList.size() == 0){
-            this.equationTextView.setText("0");
-        }else {
-            this.equationTextView.setText(this.calculationList.toString());
-        }
+        // dadurch wird die onDraw() Methode erneut aufgerufen!
+        this.invalidate();
     }
 }

@@ -86,9 +86,13 @@ public class CalculationList extends LinkedList {
     public String toString() {
         int size = this.size();
         StringBuilder sb = new StringBuilder(size);
-        for (int i = 0; i < size; i++) {
-            Object o = this.get(i);
-            sb.append(o.toString());
+        if (size == 0) {
+            sb.append(0);
+        } else {
+            for (int i = 0; i < size; i++) {
+                Object o = this.get(i);
+                sb.append(o.toString());
+            }
         }
         return sb.toString();
     }
