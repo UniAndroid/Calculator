@@ -61,6 +61,7 @@ public class CalculationNumber {
         return hasDecimalPoint;
     }
 
+    // TODO hier ist noch ein bug drin, der verhindert, nullen hintern komma einzufügen
     @Override
     public String toString() {
         if (hasDecimalPoint()) {
