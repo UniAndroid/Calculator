@@ -1,5 +1,6 @@
 package us.team.awesome.calculator.math.operators;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import us.team.awesome.calculator.math.CalculationList;
@@ -21,11 +22,11 @@ public abstract class CalculationOperator {
         return value;
     }
 
-    public double getNumberBeforeOperator(int index, CalculationList list) {
+    public BigDecimal getNumberBeforeOperator(int index, CalculationList list) {
         return ((CalculationNumber) list.get(index - 1)).getValue();
     }
 
-    public double getNumberAfterOperator(int index, CalculationList list) {
+    public BigDecimal getNumberAfterOperator(int index, CalculationList list) {
         return ((CalculationNumber) list.get(index + 1)).getValue();
     }
 

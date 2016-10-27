@@ -1,5 +1,7 @@
 package us.team.awesome.calculator.math.operators.basic;
 
+import java.math.BigDecimal;
+
 import us.team.awesome.calculator.math.CalculationList;
 import us.team.awesome.calculator.math.CalculationNumber;
 import us.team.awesome.calculator.math.operators.CalculationOperator;
@@ -16,9 +18,9 @@ public class AddOperator extends CalculationOperator {
 
     @Override
     public CalculationList calculate(int index, CalculationList list) {
-        double firstNumber = getNumberBeforeOperator(index, list);
-        double secondNumber = getNumberAfterOperator(index, list);
-        double result = firstNumber + secondNumber;
+        BigDecimal firstNumber = getNumberBeforeOperator(index, list);
+        BigDecimal secondNumber = getNumberAfterOperator(index, list);
+        BigDecimal result = firstNumber.add(secondNumber);
         list.remove(index - 1); // remove firstNumber
         index -= 1; // lower index because operator shift to the left
         list.remove(index + 1); // remove secondNumber

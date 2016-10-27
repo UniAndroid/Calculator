@@ -10,8 +10,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+
 import us.team.awesome.calculator.R;
 import us.team.awesome.calculator.math.CalculationList;
+import us.team.awesome.calculator.math.CalculationNumber;
 import us.team.awesome.calculator.util.EquationMalformedException;
 import us.team.awesome.calculator.util.MathException;
 
@@ -115,12 +118,8 @@ public class EquationView extends View{
 
     public void calculate() {
         try {
-            double result = this.calculationList.calculateEquation();
-            if(result % 1 == 0){
-                this.ergebnisString = "" + (int) this.calculationList.calculateEquation();
-            }else {
-                this.ergebnisString = "" + this.calculationList.calculateEquation();
-            }
+            CalculationNumber result = this.calculationList.calculateEquation();
+            this.ergebnisString = result.toString();
             this.invalidate();
         } catch (MathException e) {
             this.ergebnisString = "ERROR";

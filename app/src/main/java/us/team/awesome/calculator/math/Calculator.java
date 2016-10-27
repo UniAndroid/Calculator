@@ -1,5 +1,7 @@
 package us.team.awesome.calculator.math;
 
+import java.math.BigDecimal;
+
 import us.team.awesome.calculator.math.operators.CalculationOperator;
 import us.team.awesome.calculator.math.operators.basic.AddOperator;
 import us.team.awesome.calculator.math.operators.basic.DivideOperator;
@@ -24,13 +26,13 @@ class Calculator {
         this.equation = (CalculationList) equation.clone();
     }
 
-    double getCalculationResult() throws MathException {
+    CalculationNumber getCalculationResult() throws MathException {
         return calculate(equation);
     }
 
-    private double calculate(CalculationList list) throws MathException {
+    private CalculationNumber calculate(CalculationList list) throws MathException {
         if (list.isEmpty()) {
-            return 0;
+            return new CalculationNumber(0);
         }
 
         executeBracketsFirst();
@@ -41,7 +43,7 @@ class Calculator {
             list = operator.calculate(index, list);
             return calculate(list);
         } else {
-            return ((CalculationNumber) list.getFirst()).getValue();
+            return ((CalculationNumber) list.getFirst());
         }
     }
 
@@ -50,8 +52,8 @@ class Calculator {
             int index = getNextBracket();
             if (index != -1) {
                 CalculationList childList = (CalculationList) equation.get(index);
-                double result = childList.calculateEquation();
-                equation.set(index, new CalculationNumber(result));
+                CalculationNumber result = childList.calculateEquation();
+                equation.set(index, result);
             }else{
                 break;
             }

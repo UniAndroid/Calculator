@@ -1,5 +1,6 @@
 package us.team.awesome.calculator.math;
 
+import java.math.BigDecimal;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -33,6 +34,10 @@ public class CalculationList extends LinkedList {
      * adds to the parent CalculationList.
      */
     private boolean isComplete;
+
+    public CalculationList() {
+        this(true);
+    }
 
     public CalculationList(boolean isComplete) {
         super();
@@ -130,7 +135,7 @@ public class CalculationList extends LinkedList {
         }
     }
 
-    public double calculateEquation() throws MathException {
+    public CalculationNumber calculateEquation() throws MathException {
         try {
             Calculator calculator = new Calculator(this);
             return calculator.getCalculationResult();
