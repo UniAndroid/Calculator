@@ -204,6 +204,20 @@ public class CalculationListUnitTest {
         assertEquals("26.13", result.toString());
     }
 
+    @Test
+    public void shouldBeFormedCorrect3() throws Exception {
+        CalculationList list = new CalculationList();
+        list.addNumber(2);
+        list.addDecimalPoint();
+        list.addNumber(0);
+        list.addNumber(0);
+        list.addNumber(1);
+        list.addMultiplyOperator();
+        list.addNumber(13);
+
+        assertEquals("2.001*13", list.toString());
+    }
+
     @Test(expected= MathException.class)
     public void shouldCalculateFalse() throws Exception {
         CalculationList list = new CalculationList();

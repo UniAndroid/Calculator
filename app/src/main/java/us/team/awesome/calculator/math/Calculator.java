@@ -27,7 +27,9 @@ class Calculator {
     }
 
     CalculationNumber getCalculationResult() throws MathException {
-        return calculate(equation);
+        CalculationNumber result = calculate(equation);
+        result.removeZerosFromEnd();
+        return result;
     }
 
     private CalculationNumber calculate(CalculationList list) throws MathException {

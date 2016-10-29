@@ -61,12 +61,11 @@ public class CalculationNumber {
         return hasDecimalPoint;
     }
 
-    // TODO hier ist noch ein bug drin, der verhindert, nullen hintern komma einzufügen
     @Override
     public String toString() {
         if (hasDecimalPoint()) {
             if (hasNumberAfterDecimalPoint) {
-                return removeZerosFromEnd(this.value.toString());
+                return this.value.toString();//removeZerosFromEnd(this.value.toString());
             } else {
                 return Integer.toString(this.value.intValue()) + ".";
             }
@@ -76,11 +75,12 @@ public class CalculationNumber {
 
     }
 
-    private String removeZerosFromEnd(String number) {
+    public void removeZerosFromEnd() {
+        String number = toString();
         int indexOfDot = number.indexOf('.');
         int lastIndex;
         int lastZeroIndex;
-        while (true) {
+        while (indexOfDot != -1) {
             lastIndex = number.length() - 1;
             lastZeroIndex = number.lastIndexOf('0', lastIndex);
             if (lastZeroIndex == lastIndex && zeroNotBehindDot(indexOfDot, lastZeroIndex)) {
@@ -89,7 +89,7 @@ public class CalculationNumber {
                 break;
             }
         }
-        return number;
+        this.value = new BigDecimal(number);
     }
 
     /**

@@ -1,15 +1,12 @@
 package us.team.awesome.calculator.math;
 
-import java.math.BigDecimal;
 import java.util.LinkedList;
-import java.util.Objects;
 
 import us.team.awesome.calculator.math.operators.basic.AddOperator;
 import us.team.awesome.calculator.math.operators.basic.DivideOperator;
 import us.team.awesome.calculator.math.operators.basic.MultiplyOperator;
 import us.team.awesome.calculator.math.operators.basic.SubtractOperator;
 import us.team.awesome.calculator.util.DivideByZeroException;
-import us.team.awesome.calculator.util.EquationMalformedException;
 import us.team.awesome.calculator.util.MathException;
 
 /**
@@ -53,7 +50,7 @@ public class CalculationList extends LinkedList {
                 CalculationNumber numInstance = (CalculationNumber) getLast();
                 numInstance.attacheNumber(num);
             } else {
-                add(new CalculationNumber(num));
+                addItem(new CalculationNumber(num));
             }
         }
     }
@@ -73,7 +70,7 @@ public class CalculationList extends LinkedList {
             CalculationList last = (CalculationList) getLast();
             last.addAddOperator();
         } else {
-            add(new AddOperator());
+            addItem(new AddOperator());
         }
     }
 
@@ -82,7 +79,7 @@ public class CalculationList extends LinkedList {
             CalculationList last = (CalculationList) getLast();
             last.addSubtractOperator();
         } else {
-            add(new SubtractOperator());
+            addItem(new SubtractOperator());
         }
     }
 
@@ -91,7 +88,7 @@ public class CalculationList extends LinkedList {
             CalculationList last = (CalculationList) getLast();
             last.addMultiplyOperator();
         } else {
-            add(new MultiplyOperator());
+            addItem(new MultiplyOperator());
         }
     }
 
@@ -100,7 +97,7 @@ public class CalculationList extends LinkedList {
             CalculationList last = (CalculationList) getLast();
             last.addDivideOperator();
         } else {
-            add(new DivideOperator());
+            addItem(new DivideOperator());
         }
     }
 
@@ -122,7 +119,7 @@ public class CalculationList extends LinkedList {
             CalculationList last = (CalculationList) getLast();
             last.addLeftBracket();
         } else {
-            add(new CalculationList(false));
+            addItem(new CalculationList(false));
         }
     }
 
@@ -194,6 +191,18 @@ public class CalculationList extends LinkedList {
             return !last.isComplete();
         } else {
             return false;
+        }
+    }
+
+    private void addItem(Object item) {
+        removeUnnecessaryZeros();
+        this.add(item);
+    }
+
+    private void removeUnnecessaryZeros() {
+        if(!isEmpty() && getLast() instanceof CalculationNumber) {
+            CalculationNumber num = (CalculationNumber) getLast();
+            num.removeZerosFromEnd();
         }
     }
 }
