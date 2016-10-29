@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Einstellungen</string>
+    <string name="action_settings">settings</string>
 
     <string name="nineNumber">9</string>
     <string name="eightNumber">8</string>
@@ -25,9 +25,9 @@
     <string name="equalSign">=</string>
     <string name="clearSign">C</string>
 
-    <string name="malformedException">Die Gleichung ist nicht korrekt aufgebaut.</string>
+    <string name="malformedException">The equation is malformed.</string>
     <string name="bracketLeft">(</string>
     <string name="bracketRight">)</string>
-    <string name="autoCalculateSummary">Wenn diese Option aktiviert ist, wird nach jeder Eingabe ein Ergebnis berechnet, sofern dies möglich ist.</string>
+    <string name="autoCalculateSummary">Wenn diese Option aktiviert ist, wird nach jeder Eingabe</string>
     <string name="autoCalculate">Auomatische Berechnung</string>
 </resources>

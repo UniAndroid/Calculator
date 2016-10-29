@@ -1,8 +1,9 @@
 package us.team.awesome.calculator.activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,20 +12,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 
 import us.team.awesome.calculator.R;
 import us.team.awesome.calculator.components.EquationView;
-import us.team.awesome.calculator.math.CalculationList;
-import us.team.awesome.calculator.util.EquationMalformedException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Button zeroButton, oneButton, twoButton, threeButton, fourButton, fiveButton, sixButton;
-    private Button sevenButton, eightButton, nineButton, addButton, substractButton, collonButton;
-    private Button clearButton, multiplyButton, divideButton;
+    private Button clearButton;
     private EquationView equationView;
+    private boolean autoCalculate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,24 +43,6 @@ public class MainActivity extends AppCompatActivity
 
         this.equationView = (EquationView) findViewById(R.id.equationView);
 
-        this.zeroButton = (Button) findViewById(R.id.zeroButton);
-        this.oneButton = (Button) findViewById(R.id.oneButton);
-        this.twoButton = (Button) findViewById(R.id.twoButton);
-        this.threeButton = (Button) findViewById(R.id.threeButton);
-        this.fourButton = (Button) findViewById(R.id.fourButton);
-        this.fiveButton = (Button) findViewById(R.id.fiveButton);
-        this.sixButton = (Button) findViewById(R.id.sixButton);
-        this.sevenButton = (Button) findViewById(R.id.sevenButton);
-        this.eightButton = (Button) findViewById(R.id.eightButton);
-        this.nineButton = (Button) findViewById(R.id.nineButton);
-
-        this.collonButton = (Button) findViewById(R.id.collonButton);
-
-        this.addButton = (Button) findViewById(R.id.addButton);
-        this.substractButton = (Button) findViewById(R.id.substractButton);
-        this.multiplyButton = (Button) findViewById(R.id.multiplyButton);
-        this.divideButton = (Button) findViewById(R.id.divideButton);
-
         this.clearButton = (Button) findViewById(R.id.clearButton);
         this.clearButton.setOnClickListener(new View.OnClickListener() {
 
@@ -70,6 +51,16 @@ public class MainActivity extends AppCompatActivity
                 equationView.clear();
             }
         });
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        autoCalculate = sharedPref.getBoolean(SettingsActivity.AUTO_CALCULATE, false);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        autoCalculate = sharedPref.getBoolean(SettingsActivity.AUTO_CALCULATE, false);
     }
 
     @Override
@@ -98,6 +89,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -133,6 +126,9 @@ public class MainActivity extends AppCompatActivity
         Button clickedButton = (Button) view;
         String number = (String) clickedButton.getText();
         equationView.addNumber(number);
+        if(autoCalculate) {
+            equationView.calculate();
+        }
     }
 
     public void multiplyClickedListener(View view) {
