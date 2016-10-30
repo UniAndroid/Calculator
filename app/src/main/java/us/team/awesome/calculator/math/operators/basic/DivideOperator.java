@@ -1,5 +1,7 @@
 package us.team.awesome.calculator.math.operators.basic;
 
+import android.graphics.Canvas;
+
 import java.math.BigDecimal;
 
 import us.team.awesome.calculator.math.CalculationList;
@@ -33,5 +35,11 @@ public class DivideOperator extends CalculationOperator {
         list.add(index, new CalculationNumber(result)); // add calculated number
         list.remove(index + 1); // remove old operator
         return list;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.drawText("2 + 3", 0, 50, this.getPaint());
+        canvas.drawLine(0, 60, 110, 60, this.getPaint());
     }
 }

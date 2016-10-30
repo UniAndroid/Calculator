@@ -1,21 +1,16 @@
 package us.team.awesome.calculator.components;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import java.math.BigDecimal;
-
-import us.team.awesome.calculator.R;
 import us.team.awesome.calculator.math.CalculationList;
 import us.team.awesome.calculator.math.CalculationNumber;
-import us.team.awesome.calculator.util.EquationMalformedException;
+import us.team.awesome.calculator.math.operators.basic.AddOperator;
+import us.team.awesome.calculator.math.operators.basic.DivideOperator;
 import us.team.awesome.calculator.util.MathException;
 
 /**
@@ -28,7 +23,7 @@ public class EquationView extends View{
     private Paint backgroundPainter;
     private Paint foregroundPainter;
 
-    private String ergebnisString = "";
+    private String resultString = "";
 
     private CalculationList calculationList;
 
@@ -41,9 +36,11 @@ public class EquationView extends View{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawRect(0, 0, getWidth(), getHeight(), backgroundPainter);
-        canvas.drawText(this.calculationList.toString(), 0,50,foregroundPainter);
-        if(!this.ergebnisString.isEmpty()){
-            canvas.drawText(this.ergebnisString, getWidth() - (this.ergebnisString.length()*30), getHeight()-50, foregroundPainter);
+//        canvas.drawText(this.calculationList.toString(), 0,50,foregroundPainter);
+        DivideOperator test = new DivideOperator();
+        test.draw(canvas);
+        if(!this.resultString.isEmpty()){
+            canvas.drawText(this.resultString, getWidth() - (this.resultString.length()*30), getHeight()-50, foregroundPainter);
         }
     }
 
@@ -112,17 +109,17 @@ public class EquationView extends View{
 
     public void clear(){
         this.calculationList = new CalculationList(true);
-        this.ergebnisString = "";
+        this.resultString = "";
         this.updateEquation();
     }
 
     public void calculate() {
         try {
             CalculationNumber result = this.calculationList.calculateEquation();
-            this.ergebnisString = result.toString();
+            this.resultString = result.toString();
             this.invalidate();
         } catch (MathException e) {
-            this.ergebnisString = "ERROR";
+            this.resultString = "ERROR";
             e.printStackTrace();
         }
     }

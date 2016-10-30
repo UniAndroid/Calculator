@@ -1,5 +1,9 @@
 package us.team.awesome.calculator.math.operators.basic;
 
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+
 import java.math.BigDecimal;
 
 import us.team.awesome.calculator.math.CalculationList;
@@ -12,7 +16,7 @@ import us.team.awesome.calculator.math.operators.CalculationOperator;
 
 public class AddOperator extends CalculationOperator {
 
-    public AddOperator(){
+    public AddOperator() {
         super("+");
     }
 
@@ -27,5 +31,10 @@ public class AddOperator extends CalculationOperator {
         list.add(index, new CalculationNumber(result)); // add calculated number
         list.remove(index + 1); // remove old operator
         return list;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+        canvas.drawText(this.getValue(), 0, 50, this.getPaint());
     }
 }

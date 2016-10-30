@@ -1,5 +1,7 @@
 package us.team.awesome.calculator.math.operators.basic;
 
+import android.graphics.Canvas;
+
 import java.math.BigDecimal;
 
 import us.team.awesome.calculator.math.CalculationList;
@@ -27,5 +29,10 @@ public class SubtractOperator extends CalculationOperator {
         list.add(index, new CalculationNumber(result)); // add calculated number
         list.remove(index + 1); // remove old operator
         return list;
+    }
+
+    @Override
+    public void draw(Canvas canvas) {
+
     }
 }
