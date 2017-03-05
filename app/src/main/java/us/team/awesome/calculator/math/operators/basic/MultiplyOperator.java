@@ -2,30 +2,57 @@ package us.team.awesome.calculator.math.operators.basic;
 
 import java.math.BigDecimal;
 
-import us.team.awesome.calculator.math.CalculationList;
-import us.team.awesome.calculator.math.CalculationNumber;
-import us.team.awesome.calculator.math.operators.CalculationOperator;
+import us.team.awesome.calculator.math.operators.CalculationObject;
+import us.team.awesome.calculator.util.DivideByZeroException;
 
 /**
  * Created by Stefan on 14.10.2016.
  */
 
-public class MultiplyOperator extends CalculationOperator {
+public class MultiplyOperator extends CalculationObject {
+
+    private CalculationObject multiplier;
+    private CalculationObject multiplicand;
 
     public MultiplyOperator() {
-        super("*");
+        super(Constants.CalculationSequence.MULTIPLY);
+    }
+
+    public void setMultiplier(CalculationObject multiplier) {
+        this.multiplier = multiplier;
+    }
+
+    public void setMultiplicand(CalculationObject multiplicand) {
+        this.multiplicand = multiplicand;
+    }
+
+    public CalculationObject getMultiplier() {
+        return multiplier;
+    }
+
+    public CalculationObject getMultiplicand() {
+        return multiplicand;
     }
 
     @Override
-    public CalculationList calculate(int index, CalculationList list) {
-        BigDecimal firstNumber = getNumberBeforeOperator(index, list);
-        BigDecimal secondNumber = getNumberAfterOperator(index, list);
-        BigDecimal result = firstNumber.multiply(secondNumber);
-        list.remove(index - 1); // remove firstNumber
-        index -= 1; // lower index because operator shift to the left
-        list.remove(index + 1); // remove secondNumber
-        list.add(index, new CalculationNumber(result)); // add calculated number
-        list.remove(index + 1); // remove old operator
-        return list;
+    public BigDecimal getValue() throws DivideByZeroException {
+        BigDecimal _multiplier = multiplier.getValue();
+        BigDecimal _multiplicand = multiplicand.getValue();
+        return _multiplier.multiply(_multiplicand);
+    }
+
+    @Override
+    public void addCalculationObject(CalculationObject calculationObject) {
+        calculationObject.addCalculationObject(multiplicand);
+    }
+
+    @Override
+    public CalculationObject getRelevantObjectForHigherSequence() {
+        return getMultiplicand();
+    }
+
+    @Override
+    public void setRelevantObjectForHigherSequence(CalculationObject object) {
+        setMultiplicand(object);
     }
 }

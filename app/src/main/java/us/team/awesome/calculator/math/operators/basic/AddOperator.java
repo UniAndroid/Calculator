@@ -2,30 +2,61 @@ package us.team.awesome.calculator.math.operators.basic;
 
 import java.math.BigDecimal;
 
-import us.team.awesome.calculator.math.CalculationList;
-import us.team.awesome.calculator.math.CalculationNumber;
-import us.team.awesome.calculator.math.operators.CalculationOperator;
+import us.team.awesome.calculator.math.operators.CalculationObject;
+import us.team.awesome.calculator.util.DivideByZeroException;
 
 /**
  * Created by Stefan on 14.10.2016.
  */
 
-public class AddOperator extends CalculationOperator {
+public class AddOperator extends CalculationObject {
 
-    public AddOperator(){
-        super("+");
+    private CalculationObject augend;
+    private CalculationObject addend;
+
+    public AddOperator() {
+        super(Constants.CalculationSequence.ADD);
+    }
+
+    public void setAugend(CalculationObject augend) {
+        this.augend = augend;
+    }
+
+    public void setAddend(CalculationObject addend) {
+        this.addend = addend;
+    }
+
+    public CalculationObject getAugend() {
+        return augend;
+    }
+
+    public CalculationObject getAddend() {
+        return addend;
     }
 
     @Override
-    public CalculationList calculate(int index, CalculationList list) {
-        BigDecimal firstNumber = getNumberBeforeOperator(index, list);
-        BigDecimal secondNumber = getNumberAfterOperator(index, list);
-        BigDecimal result = firstNumber.add(secondNumber);
-        list.remove(index - 1); // remove firstNumber
-        index -= 1; // lower index because operator shift to the left
-        list.remove(index + 1); // remove secondNumber
-        list.add(index, new CalculationNumber(result)); // add calculated number
-        list.remove(index + 1); // remove old operator
-        return list;
+    public BigDecimal getValue() throws DivideByZeroException {
+        BigDecimal _augend = augend.getValue();
+        BigDecimal _addend = addend.getValue();
+        return _augend.add(_addend);
+    }
+
+    @Override
+    public void addCalculationObject(CalculationObject calculationObject) {
+        if(addend != null) {
+            addend.addCalculationObject(calculationObject);
+        }else{
+            setAddend(calculationObject);
+        }
+    }
+
+    @Override
+    public CalculationObject getRelevantObjectForHigherSequence() {
+        return getAddend();
+    }
+
+    @Override
+    public void setRelevantObjectForHigherSequence(CalculationObject object) {
+        setAddend(object);
     }
 }

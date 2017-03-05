@@ -2,11 +2,14 @@ package us.team.awesome.calculator.math;
 
 import java.math.BigDecimal;
 
+import us.team.awesome.calculator.math.operators.CalculationObject;
+import us.team.awesome.calculator.math.operators.basic.Constants;
+
 /**
  * Created by Stefan on 14.10.2016.
  */
 
-public class CalculationNumber {
+public class CalculationNumber extends CalculationObject {
 
     private BigDecimal value;
     private boolean hasDecimalPoint = false;
@@ -21,6 +24,7 @@ public class CalculationNumber {
     }
 
     public CalculationNumber(BigDecimal num) {
+        super(Constants.CalculationSequence.NUMBER);
         if (num.doubleValue() % 1 != 0) {
             hasDecimalPoint = true;
             hasNumberAfterDecimalPoint = true;
@@ -28,8 +32,29 @@ public class CalculationNumber {
         this.value = num;
     }
 
+    @Override
     public BigDecimal getValue() {
         return value;
+    }
+
+    @Override
+    public void addCalculationObject(CalculationObject calculationObject) {
+        if(calculationObject instanceof CalculationNumber) {
+            CalculationNumber number = (CalculationNumber) calculationObject;
+            attacheNumber(number.getValue().intValue());
+        }else{
+            calculationObject.addCalculationObject(this);
+        }
+    }
+
+    @Override
+    public CalculationObject getRelevantObjectForHigherSequence() {
+        return null;
+    }
+
+    @Override
+    public void setRelevantObjectForHigherSequence(CalculationObject object) {
+
     }
 
     /**

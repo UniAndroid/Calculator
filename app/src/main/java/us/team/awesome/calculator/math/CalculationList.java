@@ -42,7 +42,7 @@ public class CalculationList extends LinkedList {
     }
 
     public void addNumber(int num) {
-        if (lastIsUncompleteCalculationList()) {
+        if (lastIsIncompleteCalculationList()) {
             CalculationList last = (CalculationList) getLast();
             last.addNumber(num);
         } else {
@@ -56,7 +56,7 @@ public class CalculationList extends LinkedList {
     }
 
     public void addNumber(String num) {
-        if (lastIsUncompleteCalculationList()) {
+        if (lastIsIncompleteCalculationList()) {
             CalculationList last = (CalculationList) getLast();
             last.addNumber(num);
         } else {
@@ -66,7 +66,7 @@ public class CalculationList extends LinkedList {
     }
 
     public void addAddOperator() {
-        if (lastIsUncompleteCalculationList()) {
+        if (lastIsIncompleteCalculationList()) {
             CalculationList last = (CalculationList) getLast();
             last.addAddOperator();
         } else {
@@ -75,7 +75,7 @@ public class CalculationList extends LinkedList {
     }
 
     public void addSubtractOperator() {
-        if (lastIsUncompleteCalculationList()) {
+        if (lastIsIncompleteCalculationList()) {
             CalculationList last = (CalculationList) getLast();
             last.addSubtractOperator();
         } else {
@@ -84,7 +84,7 @@ public class CalculationList extends LinkedList {
     }
 
     public void addMultiplyOperator() {
-        if (lastIsUncompleteCalculationList()) {
+        if (lastIsIncompleteCalculationList()) {
             CalculationList last = (CalculationList) getLast();
             last.addMultiplyOperator();
         } else {
@@ -93,7 +93,7 @@ public class CalculationList extends LinkedList {
     }
 
     public void addDivideOperator() {
-        if (lastIsUncompleteCalculationList()) {
+        if (lastIsIncompleteCalculationList()) {
             CalculationList last = (CalculationList) getLast();
             last.addDivideOperator();
         } else {
@@ -102,7 +102,7 @@ public class CalculationList extends LinkedList {
     }
 
     public void addDecimalPoint() {
-        if (lastIsUncompleteCalculationList()) {
+        if (lastIsIncompleteCalculationList()) {
             CalculationList last = (CalculationList) getLast();
             last.addDecimalPoint();
         } else {
@@ -115,7 +115,7 @@ public class CalculationList extends LinkedList {
     }
 
     public void addLeftBracket() {
-        if (lastIsUncompleteCalculationList()) {
+        if (lastIsIncompleteCalculationList()) {
             CalculationList last = (CalculationList) getLast();
             last.addLeftBracket();
         } else {
@@ -124,7 +124,7 @@ public class CalculationList extends LinkedList {
     }
 
     public void addRightBracket() {
-        if (lastIsUncompleteCalculationList()) {
+        if (lastIsIncompleteCalculationList()) {
             CalculationList last = (CalculationList) getLast();
             last.addRightBracket();
         } else {
@@ -185,7 +185,7 @@ public class CalculationList extends LinkedList {
      *
      * @return boolean, representing the state of the last CalculationList, if there is one.
      */
-    private boolean lastIsUncompleteCalculationList() {
+    private boolean lastIsIncompleteCalculationList() {
         if (!isEmpty() && getLast() instanceof CalculationList) {
             CalculationList last = (CalculationList) getLast();
             return !last.isComplete();

@@ -2,7 +2,6 @@ package us.team.awesome.calculator.math;
 
 import java.math.BigDecimal;
 
-import us.team.awesome.calculator.math.operators.CalculationOperator;
 import us.team.awesome.calculator.math.operators.basic.AddOperator;
 import us.team.awesome.calculator.math.operators.basic.DivideOperator;
 import us.team.awesome.calculator.math.operators.basic.MultiplyOperator;
@@ -41,8 +40,8 @@ class Calculator {
 
         int index = getNextOperatorToCalculate();
         if (index > 0) {
-            CalculationOperator operator = (CalculationOperator) list.get(index);
-            list = operator.calculate(index, list);
+//            CalculationOperator operator = (CalculationOperator) list.get(index);
+//            list = operator.calculate(index, list);
             return calculate(list);
         } else {
             return ((CalculationNumber) list.getFirst());
@@ -85,24 +84,26 @@ class Calculator {
     }
 
     private int getFirstDotOperator() {
-        return getFirstOperatorOf(new MultiplyOperator(), new DivideOperator());
+//        return getFirstOperatorOf(new MultiplyOperator(), new DivideOperator());
+        return 0;
     }
 
     private int getFirstLineOperator() {
-        return getFirstOperatorOf(new AddOperator(), new SubtractOperator());
+//        return getFirstOperatorOf(new AddOperator(), new SubtractOperator());
+        return 0;
     }
 
-    private int getFirstOperatorOf(CalculationOperator operator1, CalculationOperator operator2) {
-        int op1Index = equation.indexOf(operator1);
-        int op2Index = equation.indexOf(operator2);
-        if (hasNoOperator(op1Index, op2Index)) {
-            return -1;
-        } else if (op1BeforeOp2(op1Index, op2Index)) {
-            return op1Index;
-        } else {
-            return op2Index;
-        }
-    }
+//    private int getFirstOperatorOf(CalculationOperator operator1, CalculationOperator operator2) {
+//        int op1Index = equation.indexOf(operator1);
+//        int op2Index = equation.indexOf(operator2);
+//        if (hasNoOperator(op1Index, op2Index)) {
+//            return -1;
+//        } else if (op1BeforeOp2(op1Index, op2Index)) {
+//            return op1Index;
+//        } else {
+//            return op2Index;
+//        }
+//    }
 
     private boolean hasNoOperator(int op1Index, int op2Index) {
         return op1Index == -1 && op2Index == -1;
