@@ -5,6 +5,7 @@ import org.junit.Test;
 import us.team.awesome.calculator.math.CalculationList;
 import us.team.awesome.calculator.math.Calculator;
 import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
+import us.team.awesome.calculator.util.EquationMalformedException;
 import us.team.awesome.calculator.util.MathException;
 
 import static org.junit.Assert.assertEquals;
@@ -232,7 +233,7 @@ public class CalculationListUnitTest {
         assertEquals("2.001*13", list.toString());
     }
 
-    @Test(expected= MathException.class)
+    @Test(expected= EquationMalformedException.class)
     public void shouldCalculateFalse() throws Exception {
         CalculationList list = new CalculationList();
         list.addNumber(19);

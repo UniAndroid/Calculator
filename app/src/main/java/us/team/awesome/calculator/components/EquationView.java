@@ -6,16 +6,18 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+
 import us.team.awesome.calculator.math.CalculationList;
 import us.team.awesome.calculator.math.Calculator;
 import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
+import us.team.awesome.calculator.util.EquationMalformedException;
 import us.team.awesome.calculator.util.MathException;
 
 /**
  * Created by JWO on 17.10.2016.
  */
 
-public class EquationView extends View{
+public class EquationView extends View {
 
 
     private Paint backgroundPainter;
@@ -36,9 +38,9 @@ public class EquationView extends View{
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawRect(0, 0, getWidth(), getHeight(), backgroundPainter);
-        canvas.drawText(this.calculationList.toString(), 0,50,foregroundPainter);
-        if(!this.ergebnisString.isEmpty()){
-            canvas.drawText(this.ergebnisString, getWidth() - (this.ergebnisString.length()*30), getHeight()-50, foregroundPainter);
+        canvas.drawText(this.calculationList.toString(), 0, 50, foregroundPainter);
+        if (!this.ergebnisString.isEmpty()) {
+            canvas.drawText(this.ergebnisString, getWidth() - (this.ergebnisString.length() * 30), getHeight() - 50, foregroundPainter);
         }
     }
 
@@ -60,37 +62,37 @@ public class EquationView extends View{
         this.foregroundPainter.setTextSize(50);
     }
 
-    public void addNumber(int number){
+    public void addNumber(int number) {
         this.calculationList.addNumber(number);
         this.updateEquation();
     }
 
-    public void addNumber(String number){
+    public void addNumber(String number) {
         this.calculationList.addNumber(number);
         this.updateEquation();
     }
 
-    public void addAddOperator(){
+    public void addAddOperator() {
         this.calculationList.addAddOperator();
         this.updateEquation();
     }
 
-    public void addSubtractOperator(){
+    public void addSubtractOperator() {
         this.calculationList.addSubtractOperator();
         this.updateEquation();
     }
 
-    public void addMultiplyOperator(){
+    public void addMultiplyOperator() {
         this.calculationList.addMultiplyOperator();
         this.updateEquation();
     }
 
-    public void addDivideOperator(){
+    public void addDivideOperator() {
         this.calculationList.addDivideOperator();
         this.updateEquation();
     }
 
-    public void addDecimalPoint(){
+    public void addDecimalPoint() {
         this.calculationList.addDecimalPoint();
         this.updateEquation();
     }
@@ -105,7 +107,7 @@ public class EquationView extends View{
         this.updateEquation();
     }
 
-    public void clear(){
+    public void clear() {
         this.calculationList = new CalculationList(true);
         this.ergebnisString = "";
         this.updateEquation();
@@ -117,13 +119,13 @@ public class EquationView extends View{
             CalculationNumber result = calculator.getCalculationResult();
             this.ergebnisString = result.toString();
             this.invalidate();
-        } catch (MathException e) {
+        } catch (MathException | EquationMalformedException e) {
             this.ergebnisString = "ERROR";
             e.printStackTrace();
         }
     }
 
-    public String getCalculationString(){
+    public String getCalculationString() {
         return calculationList.toString();
     }
 

@@ -3,6 +3,7 @@ package us.team.awesome.calculator.math;
 import java.math.BigDecimal;
 import us.team.awesome.calculator.math.operators.CalculationObject;
 import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
+import us.team.awesome.calculator.util.EquationMalformedException;
 import us.team.awesome.calculator.util.MathException;
 
 /**
@@ -24,7 +25,7 @@ public class Calculator {
         this.parser = new CalculationListParser(equation);
     }
 
-    public CalculationNumber getCalculationResult() throws MathException {
+    public CalculationNumber getCalculationResult() throws MathException, EquationMalformedException {
         parser.setCalculationList(equation);
         term = parser.parseCalculationList();
 

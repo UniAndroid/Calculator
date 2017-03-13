@@ -22,10 +22,6 @@ public abstract class CalculationObject implements Comparable<CalculationObject>
         return calculationSequence.compareTo(o.calculationSequence);
     }
 
-    public int getCalculationSequence() {
-        return calculationSequence;
-    }
-
     public abstract BigDecimal getValue() throws DivideByZeroException;
 
     public Object clone(){

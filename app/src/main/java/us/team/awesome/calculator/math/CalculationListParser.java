@@ -8,6 +8,7 @@ import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
 import us.team.awesome.calculator.math.operators.basic.DivideOperator;
 import us.team.awesome.calculator.math.operators.basic.MultiplyOperator;
 import us.team.awesome.calculator.math.operators.basic.SubtractOperator;
+import us.team.awesome.calculator.util.EquationMalformedException;
 
 /**
  * Created by Stefan on 21.02.2017.
@@ -21,7 +22,7 @@ public class CalculationListParser {
         this.calculationList = calculationList.deepClone();
     }
 
-    public CalculationObject parseCalculationList() {
+    public CalculationObject parseCalculationList() throws EquationMalformedException {
         if (calculationList.isEmpty()) {
             return new CalculationNumber(0);
         }
@@ -37,7 +38,7 @@ public class CalculationListParser {
         this.calculationList = calculationList.deepClone();
     }
 
-    private void parseBrackets() {
+    private void parseBrackets() throws EquationMalformedException {
         while(true) {
             int index = getIndexOfNextBracket();
             if (index != -1) {
@@ -51,7 +52,7 @@ public class CalculationListParser {
         }
     }
 
-    private void parseDotOperators() {
+    private void parseDotOperators() throws EquationMalformedException {
         int index = getNextDotOperator();
         while(index >= 0) {
             parseStandardOperator(index);
@@ -59,7 +60,7 @@ public class CalculationListParser {
         }
     }
 
-    private void parseLineOperators() {
+    private void parseLineOperators() throws EquationMalformedException {
         int index = getNextLineOperator();
         while(index >= 0) {
             parseStandardOperator(index);
@@ -67,11 +68,16 @@ public class CalculationListParser {
         }
     }
 
-    private void parseStandardOperator(int index) {
+    private void parseStandardOperator(int index) throws EquationMalformedException {
         CalculationOperator operator = (CalculationOperator) calculationList.get(index);
-        CalculationObject leftObject = (CalculationObject) calculationList.get(index -1);
-        CalculationObject rightObject = (CalculationObject) calculationList.get(index +1);
-
+        CalculationObject leftObject;
+        CalculationObject rightObject;
+        try {
+            leftObject = (CalculationObject) calculationList.get(index -1);
+            rightObject = (CalculationObject) calculationList.get(index +1);
+        } catch (IndexOutOfBoundsException e) {
+            throw new EquationMalformedException();
+        }
         operator.setLeftCalculationObject(leftObject);
         operator.setRightCalculationObject(rightObject);
 
