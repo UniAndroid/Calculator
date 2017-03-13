@@ -6,9 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-
-import java.math.BigDecimal;
-
 import us.team.awesome.calculator.math.CalculationList;
 import us.team.awesome.calculator.math.Calculator;
 import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
@@ -117,7 +114,7 @@ public class EquationView extends View{
     public void calculate() {
         try {
             calculator.setEquation(this.calculationList);
-            BigDecimal result = calculator.getCalculationResult();
+            CalculationNumber result = calculator.getCalculationResult();
             this.ergebnisString = result.toString();
             this.invalidate();
         } catch (MathException e) {

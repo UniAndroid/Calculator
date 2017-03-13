@@ -21,22 +21,6 @@ public class DivideOperator extends CalculationObject implements CalculationOper
         super(Constants.CalculationSequence.DIVIDE);
     }
 
-    public void setDividend(CalculationObject dividend) {
-        this.dividend = dividend;
-    }
-
-    public void setDivisor(CalculationObject divisor) {
-        this.divisor = divisor;
-    }
-
-    public CalculationObject getDividend() {
-        return dividend;
-    }
-
-    public CalculationObject getDivisor() {
-        return divisor;
-    }
-
     @Override
     public BigDecimal getValue() throws DivideByZeroException {
         BigDecimal _dividend = dividend.getValue();
@@ -77,6 +61,18 @@ public class DivideOperator extends CalculationObject implements CalculationOper
             return sameDividend && sameDivisor;
         }
         return super.equals(obj);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if(dividend != null) {
+            sb.append(dividend.toString());
+        }
+        sb.append(":");
+        if(divisor != null) {
+            sb.append(divisor.toString());
+        }
+        return sb.toString();
     }
 
     public Object clone() {

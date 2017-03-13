@@ -21,22 +21,6 @@ public class SubtractOperator extends CalculationObject implements CalculationOp
         super(Constants.CalculationSequence.SUBTRACT);
     }
 
-    public void setMinuend(CalculationObject minuend) {
-        this.minuend = minuend;
-    }
-
-    public void setSubtrahend(CalculationObject subtrahend) {
-        this.subtrahend = subtrahend;
-    }
-
-    public CalculationObject getMinuend() {
-        return minuend;
-    }
-
-    public CalculationObject getSubtrahend() {
-        return subtrahend;
-    }
-
     @Override
     public BigDecimal getValue() throws DivideByZeroException {
         BigDecimal _minuend = minuend.getValue();
@@ -73,6 +57,18 @@ public class SubtractOperator extends CalculationObject implements CalculationOp
             return sameMinuend && sameSubtrahend;
         }
         return super.equals(obj);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if(minuend != null) {
+            sb.append(minuend.toString());
+        }
+        sb.append("-");
+        if(subtrahend != null) {
+            sb.append(subtrahend.toString());
+        }
+        return sb.toString();
     }
 
     public Object clone() {

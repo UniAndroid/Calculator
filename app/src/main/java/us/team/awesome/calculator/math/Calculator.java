@@ -2,6 +2,7 @@ package us.team.awesome.calculator.math;
 
 import java.math.BigDecimal;
 import us.team.awesome.calculator.math.operators.CalculationObject;
+import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
 import us.team.awesome.calculator.util.MathException;
 
 /**
@@ -23,12 +24,14 @@ public class Calculator {
         this.parser = new CalculationListParser(equation);
     }
 
-    public BigDecimal getCalculationResult() throws MathException {
+    public CalculationNumber getCalculationResult() throws MathException {
         parser.setCalculationList(equation);
         term = parser.parseCalculationList();
 
         BigDecimal result = term.getValue();
-        return result;
+        CalculationNumber num = new CalculationNumber(result);
+        num.removeZerosFromEnd();
+        return num;
     }
 
     public void setEquation(CalculationList calculationList) {

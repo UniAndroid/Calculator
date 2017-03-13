@@ -2,8 +2,6 @@ package us.team.awesome.calculator;
 
 import org.junit.Test;
 
-import java.math.BigDecimal;
-
 import us.team.awesome.calculator.math.CalculationList;
 import us.team.awesome.calculator.math.Calculator;
 import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
@@ -32,8 +30,8 @@ public class CalculationListUnitTest {
     public void shouldCalculateCorrectly() throws Exception {
         CalculationList list = createExampleCalculationListWithDots();
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
-        assertEquals("-11.0", result.toString());
+        CalculationNumber  result = calculator.getCalculationResult();
+        assertEquals("-11", result.toString());
     }
 
     @Test
@@ -45,8 +43,8 @@ public class CalculationListUnitTest {
         list.addSubtractOperator();
         list.addNumber(10);
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
-        assertEquals("-1.0", result.toString());
+        CalculationNumber  result = calculator.getCalculationResult();
+        assertEquals("-1", result.toString());
     }
 
     @Test
@@ -58,16 +56,16 @@ public class CalculationListUnitTest {
         list.addSubtractOperator();
         list.addNumber(-10);
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
-        assertEquals("19.0", result.toString());
+        CalculationNumber  result = calculator.getCalculationResult();
+        assertEquals("19", result.toString());
     }
 
     @Test
     public void shouldCalculateCorrectly3() throws Exception {
         CalculationList list = createExampleCalculationList();
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
-        assertEquals("9.0", result.toString());
+        CalculationNumber  result = calculator.getCalculationResult();
+        assertEquals("9", result.toString());
     }
 
     @Test
@@ -85,7 +83,7 @@ public class CalculationListUnitTest {
         list.addDivideOperator();
         list.addNumber(5);
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
+        CalculationNumber  result = calculator.getCalculationResult();
         assertEquals("-9", result.toString());
     }
 
@@ -98,8 +96,8 @@ public class CalculationListUnitTest {
         list.addAddOperator();
         list.addNumber(5);
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
-        assertEquals("130.0", result.toString());
+        CalculationNumber  result = calculator.getCalculationResult();
+        assertEquals("130", result.toString());
     }
 
     @Test
@@ -112,7 +110,7 @@ public class CalculationListUnitTest {
         list.addAddOperator();
         list.addNumber(5);
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
+        CalculationNumber  result = calculator.getCalculationResult();
         assertEquals("6.25", result.toString());
     }
 
@@ -127,7 +125,7 @@ public class CalculationListUnitTest {
         list.addAddOperator();
         list.addNumber(5);
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
+        CalculationNumber  result = calculator.getCalculationResult();
         assertEquals("6.25", result.toString());
     }
 
@@ -141,7 +139,7 @@ public class CalculationListUnitTest {
         list.addAddOperator();
         list.addNumber(5);
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
+        CalculationNumber  result = calculator.getCalculationResult();
         assertEquals("5.25", result.toString());
     }
 
@@ -152,8 +150,8 @@ public class CalculationListUnitTest {
         list.addNumber(2);
         list.addMultiplyOperator();
         list.addNumber(5);
-        BigDecimal result = calculator.getCalculationResult();
-        assertEquals("10.0", result.toString());
+        CalculationNumber  result = calculator.getCalculationResult();
+        assertEquals("10", result.toString());
         list.addDecimalPoint();
         list.addNumber(1);
         result = calculator.getCalculationResult();
@@ -168,7 +166,7 @@ public class CalculationListUnitTest {
         list.addNumber(0);
         list.addNumber(1);
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
+        CalculationNumber  result = calculator.getCalculationResult();
         assertEquals("2.01", result.toString());
     }
 
@@ -187,7 +185,7 @@ public class CalculationListUnitTest {
         list.addRightBracket();
         assertEquals("2.01*(1+2)", list.toString());
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
+        CalculationNumber result = calculator.getCalculationResult();
         assertEquals("6.03", result.toString());
     }
 
@@ -216,7 +214,7 @@ public class CalculationListUnitTest {
 //  )
         assertEquals("2.01*(1+2*(5+1))", list.toString());
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
+        CalculationNumber  result = calculator.getCalculationResult();
         assertEquals("26.13", result.toString());
     }
 
@@ -242,7 +240,7 @@ public class CalculationListUnitTest {
         list.addNumber(10);
         list.addSubtractOperator();
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
+        calculator.getCalculationResult();
     }
 
     @Test(expected= MathException.class)
@@ -252,7 +250,7 @@ public class CalculationListUnitTest {
         list.addDivideOperator();
         list.addNumber(0);
         Calculator calculator = new Calculator(list);
-        BigDecimal result = calculator.getCalculationResult();
+        calculator.getCalculationResult();
     }
 
     private CalculationList createExampleCalculationList() {

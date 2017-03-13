@@ -70,7 +70,7 @@ public class CalculationNumber extends CalculationObject {
     public String toString() {
         if (hasDecimalPoint()) {
             if (hasNumberAfterDecimalPoint) {
-                return this.value.toString();//removeZerosFromEnd(this.value.toString());
+                return this.value.toString();//removeZerosFromEnd();
             } else {
                 return Integer.toString(this.value.intValue()) + ".";
             }

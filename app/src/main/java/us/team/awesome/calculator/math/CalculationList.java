@@ -191,8 +191,12 @@ public class CalculationList extends LinkedList {
     public CalculationList deepClone() {
         CalculationList deepCloned = new CalculationList();
         for(Object obj: this) {
-            CalculationObject _obj = (CalculationObject) obj;
-            deepCloned.add(_obj.clone());
+            if (obj instanceof CalculationList) {
+                deepCloned.add(((CalculationList) obj).deepClone());
+            }else{
+                CalculationObject _obj = (CalculationObject) obj;
+                deepCloned.add(_obj.clone());
+            }
         }
         return deepCloned;
     }

@@ -59,6 +59,18 @@ public class AddOperator extends CalculationObject implements CalculationOperato
         return super.equals(obj);
     }
 
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if(augend != null) {
+            sb.append(augend.toString());
+        }
+        sb.append("+");
+        if(addend != null) {
+            sb.append(addend.toString());
+        }
+        return sb.toString();
+    }
+
     public Object clone() {
         AddOperator o;
         o = (AddOperator) super.clone();

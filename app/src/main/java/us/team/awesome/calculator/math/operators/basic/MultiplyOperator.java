@@ -21,22 +21,6 @@ public class MultiplyOperator extends CalculationObject implements CalculationOp
         super(Constants.CalculationSequence.MULTIPLY);
     }
 
-    public void setMultiplier(CalculationObject multiplier) {
-        this.multiplier = multiplier;
-    }
-
-    public void setMultiplicand(CalculationObject multiplicand) {
-        this.multiplicand = multiplicand;
-    }
-
-    public CalculationObject getMultiplier() {
-        return multiplier;
-    }
-
-    public CalculationObject getMultiplicand() {
-        return multiplicand;
-    }
-
     @Override
     public BigDecimal getValue() throws DivideByZeroException {
         BigDecimal _multiplier = multiplier.getValue();
@@ -73,6 +57,18 @@ public class MultiplyOperator extends CalculationObject implements CalculationOp
             return sameMultiplier && sameMultiplicand;
         }
         return super.equals(obj);
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        if(multiplier != null) {
+            sb.append(multiplier.toString());
+        }
+        sb.append("*");
+        if(multiplicand != null) {
+            sb.append(multiplicand.toString());
+        }
+        return sb.toString();
     }
 
     public Object clone() {
