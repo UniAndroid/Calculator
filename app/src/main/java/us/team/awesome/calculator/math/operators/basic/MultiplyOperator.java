@@ -45,11 +45,6 @@ public class MultiplyOperator extends CalculationObject implements CalculationOp
     }
 
     @Override
-    public void addCalculationObject(CalculationObject calculationObject) {
-        calculationObject.addCalculationObject(multiplicand);
-    }
-
-    @Override
     public CalculationObject getLeftCalculationObject() {
         return multiplier;
     }
@@ -78,5 +73,17 @@ public class MultiplyOperator extends CalculationObject implements CalculationOp
             return sameMultiplier && sameMultiplicand;
         }
         return super.equals(obj);
+    }
+
+    public Object clone() {
+        MultiplyOperator m;
+        m = (MultiplyOperator) super.clone();
+        if (multiplier != null) {
+            m.multiplier = (CalculationObject) multiplier.clone();
+        }
+        if (multiplicand != null) {
+            m.multiplicand = (CalculationObject) multiplicand.clone();
+        }
+        return m;
     }
 }

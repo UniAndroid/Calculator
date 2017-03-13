@@ -49,11 +49,6 @@ public class DivideOperator extends CalculationObject implements CalculationOper
     }
 
     @Override
-    public void addCalculationObject(CalculationObject calculationObject) {
-
-    }
-
-    @Override
     public CalculationObject getLeftCalculationObject() {
         return dividend;
     }
@@ -82,5 +77,17 @@ public class DivideOperator extends CalculationObject implements CalculationOper
             return sameDividend && sameDivisor;
         }
         return super.equals(obj);
+    }
+
+    public Object clone() {
+        DivideOperator d;
+        d = (DivideOperator) super.clone();
+        if (dividend != null) {
+            d.dividend = (CalculationObject) dividend.clone();
+        }
+        if (divisor != null) {
+            d.divisor = (CalculationObject) divisor.clone();
+        }
+        return d;
     }
 }

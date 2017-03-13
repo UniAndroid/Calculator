@@ -10,7 +10,7 @@ import us.team.awesome.calculator.util.DivideByZeroException;
  * Created by Stefan on 21.02.2017.
  */
 
-public abstract class CalculationObject implements Comparable<CalculationObject>{
+public abstract class CalculationObject implements Comparable<CalculationObject>, Cloneable{
     private Integer calculationSequence;
 
     public CalculationObject(int calculationSequence) {
@@ -28,5 +28,12 @@ public abstract class CalculationObject implements Comparable<CalculationObject>
 
     public abstract BigDecimal getValue() throws DivideByZeroException;
 
-    public abstract void addCalculationObject(CalculationObject calculationObject);
+    public Object clone(){
+        CalculationObject o = null;
+        try {
+            o = (CalculationObject) super.clone();
+            o.calculationSequence = new Integer(this.calculationSequence);
+        } catch (CloneNotSupportedException e) {} // Won't happen
+        return o;
+    }
 }

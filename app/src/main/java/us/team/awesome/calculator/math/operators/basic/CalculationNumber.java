@@ -37,16 +37,6 @@ public class CalculationNumber extends CalculationObject {
         return value;
     }
 
-    @Override
-    public void addCalculationObject(CalculationObject calculationObject) {
-        if(calculationObject instanceof CalculationNumber) {
-            CalculationNumber number = (CalculationNumber) calculationObject;
-            attacheNumber(number.getValue().intValue());
-        }else{
-            calculationObject.addCalculationObject(this);
-        }
-    }
-
     /**
      * This method adds <code>attachNum</code> to the <code>value</code> of CalculationNumber.
      * <p>It does not add mathematically. For example if <code>value</code> is 5.0, and
@@ -120,5 +110,12 @@ public class CalculationNumber extends CalculationObject {
         // index    012     01234
         int diff = zeroIndex - dotIndex;
         return diff > 1;
+    }
+
+    public Object clone() {
+        CalculationNumber n;
+        n = (CalculationNumber) super.clone();
+        n.value = value;
+        return n;
     }
 }

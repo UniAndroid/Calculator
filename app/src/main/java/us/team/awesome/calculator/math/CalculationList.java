@@ -2,6 +2,7 @@ package us.team.awesome.calculator.math;
 
 import java.util.LinkedList;
 
+import us.team.awesome.calculator.math.operators.CalculationObject;
 import us.team.awesome.calculator.math.operators.basic.AddOperator;
 import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
 import us.team.awesome.calculator.math.operators.basic.DivideOperator;
@@ -185,5 +186,14 @@ public class CalculationList extends LinkedList {
             CalculationNumber num = (CalculationNumber) getLast();
             num.removeZerosFromEnd();
         }
+    }
+
+    public CalculationList deepClone() {
+        CalculationList deepCloned = new CalculationList();
+        for(Object obj: this) {
+            CalculationObject _obj = (CalculationObject) obj;
+            deepCloned.add(_obj.clone());
+        }
+        return deepCloned;
     }
 }

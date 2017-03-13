@@ -18,7 +18,7 @@ public class CalculationListParser {
     private CalculationList calculationList;
 
     public CalculationListParser(CalculationList calculationList) {
-        this.calculationList = (CalculationList) calculationList.clone();
+        this.calculationList = calculationList.deepClone();
     }
 
     public CalculationObject parseCalculationList() {
@@ -34,7 +34,7 @@ public class CalculationListParser {
     }
 
     public void setCalculationList(CalculationList calculationList) {
-        this.calculationList = (CalculationList) calculationList.clone();
+        this.calculationList = calculationList.deepClone();
     }
 
     private void parseBrackets() {

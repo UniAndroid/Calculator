@@ -45,15 +45,6 @@ public class SubtractOperator extends CalculationObject implements CalculationOp
     }
 
     @Override
-    public void addCalculationObject(CalculationObject calculationObject) {
-        if(subtrahend != null) {
-            subtrahend.addCalculationObject(calculationObject);
-        }else{
-            setSubtrahend(calculationObject);
-        }
-    }
-
-    @Override
     public CalculationObject getLeftCalculationObject() {
         return minuend;
     }
@@ -82,5 +73,17 @@ public class SubtractOperator extends CalculationObject implements CalculationOp
             return sameMinuend && sameSubtrahend;
         }
         return super.equals(obj);
+    }
+
+    public Object clone() {
+        SubtractOperator s;
+        s = (SubtractOperator) super.clone();
+        if (minuend != null) {
+            s.minuend = (CalculationObject) minuend.clone();
+        }
+        if (subtrahend != null) {
+            s.subtrahend = (CalculationObject) subtrahend.clone();
+        }
+        return s;
     }
 }

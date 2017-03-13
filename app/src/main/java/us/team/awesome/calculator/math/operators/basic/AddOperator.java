@@ -21,36 +21,11 @@ public class AddOperator extends CalculationObject implements CalculationOperato
         super(Constants.CalculationSequence.ADD);
     }
 
-    public void setAugend(CalculationObject augend) {
-        this.augend = augend;
-    }
-
-    public void setAddend(CalculationObject addend) {
-        this.addend = addend;
-    }
-
-    public CalculationObject getAugend() {
-        return augend;
-    }
-
-    public CalculationObject getAddend() {
-        return addend;
-    }
-
     @Override
     public BigDecimal getValue() throws DivideByZeroException {
         BigDecimal _augend = augend.getValue();
         BigDecimal _addend = addend.getValue();
         return _augend.add(_addend);
-    }
-
-    @Override
-    public void addCalculationObject(CalculationObject calculationObject) {
-        if(addend != null) {
-            addend.addCalculationObject(calculationObject);
-        }else{
-            setAddend(calculationObject);
-        }
     }
 
     @Override
@@ -82,5 +57,17 @@ public class AddOperator extends CalculationObject implements CalculationOperato
             return sameAddend && sameAugend;
         }
         return super.equals(obj);
+    }
+
+    public Object clone() {
+        AddOperator o;
+        o = (AddOperator) super.clone();
+        if (augend != null) {
+            o.augend = (CalculationObject) augend.clone();
+        }
+        if (addend != null) {
+            o.addend = (CalculationObject) addend.clone();
+        }
+        return o;
     }
 }
