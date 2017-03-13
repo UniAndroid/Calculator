@@ -22,21 +22,11 @@ public abstract class CalculationObject implements Comparable<CalculationObject>
         return calculationSequence.compareTo(o.calculationSequence);
     }
 
+    public int getCalculationSequence() {
+        return calculationSequence;
+    }
+
     public abstract BigDecimal getValue() throws DivideByZeroException;
 
     public abstract void addCalculationObject(CalculationObject calculationObject);
-
-    /**
-     * Liefert das CalculationObject zurück, welches für das einzufügende höherrängige CalculationObject
-     * wichtig ist. Beispiel: 1 + 2 ist ein AddOperator mit einem augend von 1 und einem addend von 2.
-     * Wird nun ein MultiplyOperator eingefügt, muss der augend 1 und der addend 2 * x heißen.
-     * Somit wird die korrekte Berechnung gewährleistet.
-     * @return
-     */
-    public abstract CalculationObject getRelevantObjectForHigherSequence();
-
-    /**
-     * siehe getRelevantObjectForHigherSequence nur schreibend und nicht lesend.
-     */
-    public abstract void setRelevantObjectForHigherSequence(CalculationObject object);
 }

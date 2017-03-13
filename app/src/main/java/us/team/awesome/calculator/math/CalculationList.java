@@ -3,11 +3,10 @@ package us.team.awesome.calculator.math;
 import java.util.LinkedList;
 
 import us.team.awesome.calculator.math.operators.basic.AddOperator;
+import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
 import us.team.awesome.calculator.math.operators.basic.DivideOperator;
 import us.team.awesome.calculator.math.operators.basic.MultiplyOperator;
 import us.team.awesome.calculator.math.operators.basic.SubtractOperator;
-import us.team.awesome.calculator.util.DivideByZeroException;
-import us.team.awesome.calculator.util.MathException;
 
 /**
  * Created by Stefan on 16.10.2016.
@@ -56,13 +55,8 @@ public class CalculationList extends LinkedList {
     }
 
     public void addNumber(String num) {
-        if (lastIsIncompleteCalculationList()) {
-            CalculationList last = (CalculationList) getLast();
-            last.addNumber(num);
-        } else {
-            int _num = Integer.parseInt(num);
-            this.addNumber(_num);
-        }
+        int _num = Integer.parseInt(num);
+        this.addNumber(_num);
     }
 
     public void addAddOperator() {
@@ -132,19 +126,6 @@ public class CalculationList extends LinkedList {
         }
     }
 
-    public CalculationNumber calculateEquation() throws MathException {
-        try {
-            Calculator calculator = new Calculator(this);
-            return calculator.getCalculationResult();
-        } catch (IndexOutOfBoundsException e) {
-            // String aus strings.xml auslesen, dafür ist der context nötigt
-            // , kann beim aufruf durch activity mitgegeben werden
-            throw new MathException("Die Gleichung ist nicht korrekt aufgebaut.", e);
-        } catch (DivideByZeroException e) {
-            throw new MathException("Es darf nicht durch 0 geteilt werden.", e);
-        }
-    }
-
     public String toString() {
         int size = this.size();
         StringBuilder sb = new StringBuilder(size);
@@ -200,7 +181,7 @@ public class CalculationList extends LinkedList {
     }
 
     private void removeUnnecessaryZeros() {
-        if(!isEmpty() && getLast() instanceof CalculationNumber) {
+        if (!isEmpty() && getLast() instanceof CalculationNumber) {
             CalculationNumber num = (CalculationNumber) getLast();
             num.removeZerosFromEnd();
         }

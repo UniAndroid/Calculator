@@ -1,15 +1,18 @@
 package us.team.awesome.calculator.math.operators.basic;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import us.team.awesome.calculator.math.operators.CalculationObject;
+import us.team.awesome.calculator.math.operators.CalculationOperator;
+import us.team.awesome.calculator.util.Constants;
 import us.team.awesome.calculator.util.DivideByZeroException;
 
 /**
  * Created by Stefan on 14.10.2016.
  */
 
-public class SubtractOperator extends CalculationObject {
+public class SubtractOperator extends CalculationObject implements CalculationOperator {
 
     private CalculationObject minuend;
     private CalculationObject subtrahend;
@@ -51,12 +54,33 @@ public class SubtractOperator extends CalculationObject {
     }
 
     @Override
-    public CalculationObject getRelevantObjectForHigherSequence() {
-        return getSubtrahend();
+    public CalculationObject getLeftCalculationObject() {
+        return minuend;
     }
 
     @Override
-    public void setRelevantObjectForHigherSequence(CalculationObject object) {
-        setSubtrahend(object);
+    public CalculationObject getRightCalculationObject() {
+        return subtrahend;
+    }
+
+    @Override
+    public void setLeftCalculationObject(CalculationObject minuend) {
+        this.minuend = minuend;
+    }
+
+    @Override
+    public void setRightCalculationObject(CalculationObject subtrahend) {
+        this.subtrahend = subtrahend;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof SubtractOperator) {
+            SubtractOperator compareOperator = (SubtractOperator) obj;
+            boolean sameMinuend = Objects.equals(compareOperator.minuend, this.minuend);
+            boolean sameSubtrahend = Objects.equals(compareOperator.subtrahend, this.subtrahend);
+            return sameMinuend && sameSubtrahend;
+        }
+        return super.equals(obj);
     }
 }

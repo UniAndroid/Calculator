@@ -1,15 +1,18 @@
 package us.team.awesome.calculator.math.operators.basic;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import us.team.awesome.calculator.math.operators.CalculationObject;
+import us.team.awesome.calculator.math.operators.CalculationOperator;
+import us.team.awesome.calculator.util.Constants;
 import us.team.awesome.calculator.util.DivideByZeroException;
 
 /**
  * Created by Stefan on 14.10.2016.
  */
 
-public class MultiplyOperator extends CalculationObject {
+public class MultiplyOperator extends CalculationObject implements CalculationOperator {
 
     private CalculationObject multiplier;
     private CalculationObject multiplicand;
@@ -47,12 +50,33 @@ public class MultiplyOperator extends CalculationObject {
     }
 
     @Override
-    public CalculationObject getRelevantObjectForHigherSequence() {
-        return getMultiplicand();
+    public CalculationObject getLeftCalculationObject() {
+        return multiplier;
     }
 
     @Override
-    public void setRelevantObjectForHigherSequence(CalculationObject object) {
-        setMultiplicand(object);
+    public CalculationObject getRightCalculationObject() {
+        return multiplicand;
+    }
+
+    @Override
+    public void setLeftCalculationObject(CalculationObject multiplier) {
+        this.multiplier = multiplier;
+    }
+
+    @Override
+    public void setRightCalculationObject(CalculationObject multiplicand) {
+        this.multiplicand = multiplicand;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof MultiplyOperator) {
+            MultiplyOperator compareOperator = (MultiplyOperator) obj;
+            boolean sameMultiplier = Objects.equals(compareOperator.multiplier, this.multiplier);
+            boolean sameMultiplicand = Objects.equals(compareOperator.multiplicand, this.multiplicand);
+            return sameMultiplier && sameMultiplicand;
+        }
+        return super.equals(obj);
     }
 }

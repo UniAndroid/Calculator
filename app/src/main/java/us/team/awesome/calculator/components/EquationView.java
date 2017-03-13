@@ -1,21 +1,17 @@
 package us.team.awesome.calculator.components;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.math.BigDecimal;
 
-import us.team.awesome.calculator.R;
 import us.team.awesome.calculator.math.CalculationList;
-import us.team.awesome.calculator.math.CalculationNumber;
-import us.team.awesome.calculator.util.EquationMalformedException;
+import us.team.awesome.calculator.math.Calculator;
+import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
 import us.team.awesome.calculator.util.MathException;
 
 /**
@@ -31,11 +27,13 @@ public class EquationView extends View{
     private String ergebnisString = "";
 
     private CalculationList calculationList;
+    private Calculator calculator;
 
     public EquationView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
         this.calculationList = new CalculationList(true);
+        this.calculator = new Calculator(calculationList);
     }
 
     protected void onDraw(Canvas canvas) {
@@ -118,7 +116,8 @@ public class EquationView extends View{
 
     public void calculate() {
         try {
-            CalculationNumber result = this.calculationList.calculateEquation();
+            calculator.setEquation(this.calculationList);
+            BigDecimal result = calculator.getCalculationResult();
             this.ergebnisString = result.toString();
             this.invalidate();
         } catch (MathException e) {

@@ -2,8 +2,11 @@ package us.team.awesome.calculator;
 
 import org.junit.Test;
 
+import java.math.BigDecimal;
+
 import us.team.awesome.calculator.math.CalculationList;
-import us.team.awesome.calculator.math.CalculationNumber;
+import us.team.awesome.calculator.math.Calculator;
+import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
 import us.team.awesome.calculator.util.MathException;
 
 import static org.junit.Assert.assertEquals;
@@ -28,8 +31,9 @@ public class CalculationListUnitTest {
     @Test
     public void shouldCalculateCorrectly() throws Exception {
         CalculationList list = createExampleCalculationListWithDots();
-        CalculationNumber result = list.calculateEquation();
-        assertEquals("-11", result.toString());
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
+        assertEquals("-11.0", result.toString());
     }
 
     @Test
@@ -40,8 +44,9 @@ public class CalculationListUnitTest {
         list.addNumber(10);
         list.addSubtractOperator();
         list.addNumber(10);
-        CalculationNumber result = list.calculateEquation();
-        assertEquals("-1", result.toString());
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
+        assertEquals("-1.0", result.toString());
     }
 
     @Test
@@ -52,15 +57,17 @@ public class CalculationListUnitTest {
         list.addNumber(10);
         list.addSubtractOperator();
         list.addNumber(-10);
-        CalculationNumber result = list.calculateEquation();
-        assertEquals("19", result.toString());
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
+        assertEquals("19.0", result.toString());
     }
 
     @Test
     public void shouldCalculateCorrectly3() throws Exception {
         CalculationList list = createExampleCalculationList();
-        CalculationNumber result = list.calculateEquation();
-        assertEquals("9", result.toString());
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
+        assertEquals("9.0", result.toString());
     }
 
     @Test
@@ -77,7 +84,8 @@ public class CalculationListUnitTest {
         list.addNumber(10);
         list.addDivideOperator();
         list.addNumber(5);
-        CalculationNumber result = list.calculateEquation();
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
         assertEquals("-9", result.toString());
     }
 
@@ -89,8 +97,9 @@ public class CalculationListUnitTest {
         list.addNumber(5);
         list.addAddOperator();
         list.addNumber(5);
-        CalculationNumber result = list.calculateEquation();
-        assertEquals("130", result.toString());
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
+        assertEquals("130.0", result.toString());
     }
 
     @Test
@@ -102,7 +111,8 @@ public class CalculationListUnitTest {
         list.addNumber(5);
         list.addAddOperator();
         list.addNumber(5);
-        CalculationNumber result = list.calculateEquation();
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
         assertEquals("6.25", result.toString());
     }
 
@@ -116,7 +126,8 @@ public class CalculationListUnitTest {
         list.addNumber(5);
         list.addAddOperator();
         list.addNumber(5);
-        CalculationNumber result = list.calculateEquation();
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
         assertEquals("6.25", result.toString());
     }
 
@@ -129,21 +140,23 @@ public class CalculationListUnitTest {
         list.addNumber(5);
         list.addAddOperator();
         list.addNumber(5);
-        CalculationNumber result = list.calculateEquation();
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
         assertEquals("5.25", result.toString());
     }
 
     @Test
     public void shouldCalculateCorrectly9() throws Exception {
         CalculationList list = new CalculationList();
+        Calculator calculator = new Calculator(list);
         list.addNumber(2);
         list.addMultiplyOperator();
         list.addNumber(5);
-        CalculationNumber result = list.calculateEquation();
-        assertEquals("10", result.toString());
+        BigDecimal result = calculator.getCalculationResult();
+        assertEquals("10.0", result.toString());
         list.addDecimalPoint();
         list.addNumber(1);
-        result = list.calculateEquation();
+        result = calculator.getCalculationResult();
         assertEquals("10.2", result.toString());
     }
 
@@ -154,7 +167,8 @@ public class CalculationListUnitTest {
         list.addDecimalPoint();
         list.addNumber(0);
         list.addNumber(1);
-        CalculationNumber result = list.calculateEquation();
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
         assertEquals("2.01", result.toString());
     }
 
@@ -172,7 +186,8 @@ public class CalculationListUnitTest {
         list.addNumber(2);
         list.addRightBracket();
         assertEquals("2.01*(1+2)", list.toString());
-        CalculationNumber result = list.calculateEquation();
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
         assertEquals("6.03", result.toString());
     }
 
@@ -200,7 +215,8 @@ public class CalculationListUnitTest {
         list.addRightBracket();
 //  )
         assertEquals("2.01*(1+2*(5+1))", list.toString());
-        CalculationNumber result = list.calculateEquation();
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
         assertEquals("26.13", result.toString());
     }
 
@@ -225,7 +241,8 @@ public class CalculationListUnitTest {
         list.addSubtractOperator();
         list.addNumber(10);
         list.addSubtractOperator();
-        CalculationNumber result = list.calculateEquation();
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
     }
 
     @Test(expected= MathException.class)
@@ -234,7 +251,8 @@ public class CalculationListUnitTest {
         list.addNumber(19);
         list.addDivideOperator();
         list.addNumber(0);
-        CalculationNumber result = list.calculateEquation();
+        Calculator calculator = new Calculator(list);
+        BigDecimal result = calculator.getCalculationResult();
     }
 
     private CalculationList createExampleCalculationList() {

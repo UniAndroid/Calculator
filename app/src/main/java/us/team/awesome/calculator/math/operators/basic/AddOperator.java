@@ -1,15 +1,18 @@
 package us.team.awesome.calculator.math.operators.basic;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 import us.team.awesome.calculator.math.operators.CalculationObject;
+import us.team.awesome.calculator.math.operators.CalculationOperator;
+import us.team.awesome.calculator.util.Constants;
 import us.team.awesome.calculator.util.DivideByZeroException;
 
 /**
  * Created by Stefan on 14.10.2016.
  */
 
-public class AddOperator extends CalculationObject {
+public class AddOperator extends CalculationObject implements CalculationOperator{
 
     private CalculationObject augend;
     private CalculationObject addend;
@@ -51,12 +54,33 @@ public class AddOperator extends CalculationObject {
     }
 
     @Override
-    public CalculationObject getRelevantObjectForHigherSequence() {
-        return getAddend();
+    public CalculationObject getLeftCalculationObject() {
+        return augend;
     }
 
     @Override
-    public void setRelevantObjectForHigherSequence(CalculationObject object) {
-        setAddend(object);
+    public CalculationObject getRightCalculationObject() {
+        return addend;
+    }
+
+    @Override
+    public void setLeftCalculationObject(CalculationObject augend) {
+        this.augend = augend;
+    }
+
+    @Override
+    public void setRightCalculationObject(CalculationObject addend) {
+        this.addend = addend;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof AddOperator) {
+            AddOperator compareOperator = (AddOperator) obj;
+            boolean sameAugend = Objects.equals(compareOperator.augend, this.augend);
+            boolean sameAddend = Objects.equals(compareOperator.addend, this.addend);
+            return sameAddend && sameAugend;
+        }
+        return super.equals(obj);
     }
 }

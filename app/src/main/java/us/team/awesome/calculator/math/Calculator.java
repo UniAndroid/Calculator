@@ -1,12 +1,7 @@
 package us.team.awesome.calculator.math;
 
 import java.math.BigDecimal;
-
-import us.team.awesome.calculator.math.operators.basic.AddOperator;
-import us.team.awesome.calculator.math.operators.basic.DivideOperator;
-import us.team.awesome.calculator.math.operators.basic.MultiplyOperator;
-import us.team.awesome.calculator.math.operators.basic.SubtractOperator;
-import us.team.awesome.calculator.util.EquationMalformedException;
+import us.team.awesome.calculator.math.operators.CalculationObject;
 import us.team.awesome.calculator.util.MathException;
 
 /**
@@ -17,103 +12,26 @@ import us.team.awesome.calculator.util.MathException;
  * The Calculator calculates a equation given by an CalculationList.
  * The original CalculationList is not altered.
  */
-class Calculator {
+public class Calculator {
 
     private CalculationList equation;
+    private CalculationListParser parser;
+    private CalculationObject term;
 
-    Calculator(CalculationList equation) {
-        this.equation = (CalculationList) equation.clone();
+    public Calculator(CalculationList equation) {
+        this.equation = equation;
+        this.parser = new CalculationListParser(equation);
     }
 
-    CalculationNumber getCalculationResult() throws MathException {
-        CalculationNumber result = calculate(equation);
-        result.removeZerosFromEnd();
+    public BigDecimal getCalculationResult() throws MathException {
+        parser.setCalculationList(equation);
+        term = parser.parseCalculationList();
+
+        BigDecimal result = term.getValue();
         return result;
     }
 
-    private CalculationNumber calculate(CalculationList list) throws MathException {
-        if (list.isEmpty()) {
-            return new CalculationNumber(0);
-        }
-
-        executeBracketsFirst();
-
-        int index = getNextOperatorToCalculate();
-        if (index > 0) {
-//            CalculationOperator operator = (CalculationOperator) list.get(index);
-//            list = operator.calculate(index, list);
-            return calculate(list);
-        } else {
-            return ((CalculationNumber) list.getFirst());
-        }
-    }
-
-    private void executeBracketsFirst() throws MathException {
-        while(true) {
-            int index = getNextBracket();
-            if (index != -1) {
-                CalculationList childList = (CalculationList) equation.get(index);
-                CalculationNumber result = childList.calculateEquation();
-                equation.set(index, result);
-            }else{
-                break;
-            }
-        }
-    }
-
-    /**
-     * gets the index of the next operator that needs to be calculated.
-     * Sequence is: * : -> + -
-     *
-     * @return int representing the index of the next operator to calculate
-     */
-    private int getNextOperatorToCalculate() {
-        int index = getFirstDotOperator();
-        if (index != -1) {
-            return index;
-        }
-        index = getFirstLineOperator();
-        if (index != -1) {
-            return index;
-        }
-        return -1;
-    }
-
-    private int getNextBracket() {
-        return equation.indexOf(new CalculationList(false));
-    }
-
-    private int getFirstDotOperator() {
-//        return getFirstOperatorOf(new MultiplyOperator(), new DivideOperator());
-        return 0;
-    }
-
-    private int getFirstLineOperator() {
-//        return getFirstOperatorOf(new AddOperator(), new SubtractOperator());
-        return 0;
-    }
-
-//    private int getFirstOperatorOf(CalculationOperator operator1, CalculationOperator operator2) {
-//        int op1Index = equation.indexOf(operator1);
-//        int op2Index = equation.indexOf(operator2);
-//        if (hasNoOperator(op1Index, op2Index)) {
-//            return -1;
-//        } else if (op1BeforeOp2(op1Index, op2Index)) {
-//            return op1Index;
-//        } else {
-//            return op2Index;
-//        }
-//    }
-
-    private boolean hasNoOperator(int op1Index, int op2Index) {
-        return op1Index == -1 && op2Index == -1;
-    }
-
-    private boolean op1BeforeOp2(int op1Index, int op2Index) {
-        if (op1Index == -1) {
-            return false;
-        } else {
-            return op2Index == -1 || (op1Index < op2Index);
-        }
+    public void setEquation(CalculationList calculationList) {
+        this.equation = calculationList;
     }
 }

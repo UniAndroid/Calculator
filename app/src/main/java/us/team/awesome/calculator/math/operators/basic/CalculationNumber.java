@@ -1,9 +1,9 @@
-package us.team.awesome.calculator.math;
+package us.team.awesome.calculator.math.operators.basic;
 
 import java.math.BigDecimal;
 
 import us.team.awesome.calculator.math.operators.CalculationObject;
-import us.team.awesome.calculator.math.operators.basic.Constants;
+import us.team.awesome.calculator.util.Constants;
 
 /**
  * Created by Stefan on 14.10.2016.
@@ -45,16 +45,6 @@ public class CalculationNumber extends CalculationObject {
         }else{
             calculationObject.addCalculationObject(this);
         }
-    }
-
-    @Override
-    public CalculationObject getRelevantObjectForHigherSequence() {
-        return null;
-    }
-
-    @Override
-    public void setRelevantObjectForHigherSequence(CalculationObject object) {
-
     }
 
     /**
