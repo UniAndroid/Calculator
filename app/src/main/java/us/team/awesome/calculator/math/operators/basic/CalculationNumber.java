@@ -1,5 +1,8 @@
 package us.team.awesome.calculator.math.operators.basic;
 
+import android.graphics.Canvas;
+import android.support.annotation.NonNull;
+
 import java.math.BigDecimal;
 
 import us.team.awesome.calculator.math.operators.CalculationObject;
@@ -117,5 +120,10 @@ public class CalculationNumber extends CalculationObject {
         n = (CalculationNumber) super.clone();
         n.value = value;
         return n;
+    }
+
+    @Override
+    public void draw(@NonNull Canvas canvas) {
+
     }
 }

@@ -1,5 +1,11 @@
 package us.team.awesome.calculator.math.operators.basic;
 
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.support.annotation.IntRange;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -7,6 +13,8 @@ import us.team.awesome.calculator.math.operators.CalculationObject;
 import us.team.awesome.calculator.math.operators.CalculationOperator;
 import us.team.awesome.calculator.util.Constants;
 import us.team.awesome.calculator.util.DivideByZeroException;
+import us.team.awesome.calculator.util.EquationMalformedException;
+import us.team.awesome.calculator.util.MathException;
 
 /**
  * Created by Stefan on 14.10.2016.
@@ -22,7 +30,10 @@ public class AddOperator extends CalculationObject implements CalculationOperato
     }
 
     @Override
-    public BigDecimal getValue() throws DivideByZeroException {
+    public BigDecimal getValue() throws MathException {
+        if (augend == null || addend == null) {
+            throw new EquationMalformedException();
+        }
         BigDecimal _augend = augend.getValue();
         BigDecimal _addend = addend.getValue();
         return _augend.add(_addend);
@@ -57,6 +68,12 @@ public class AddOperator extends CalculationObject implements CalculationOperato
             return sameAddend && sameAugend;
         }
         return super.equals(obj);
+    }
+
+    @Override
+    public void draw(@NonNull Canvas canvas) {
+        canvas.drawLine(0, 80, 40, 80, color);
+        canvas.drawLine(20, 60, 20, 100, color);
     }
 
     public String toString() {

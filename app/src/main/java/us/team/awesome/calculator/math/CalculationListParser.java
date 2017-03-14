@@ -22,7 +22,7 @@ public class CalculationListParser {
         this.calculationList = calculationList.deepClone();
     }
 
-    public CalculationObject parseCalculationList() throws EquationMalformedException {
+    public CalculationObject parseCalculationList() {
         if (calculationList.isEmpty()) {
             return new CalculationNumber(0);
         }
@@ -38,50 +38,51 @@ public class CalculationListParser {
         this.calculationList = calculationList.deepClone();
     }
 
-    private void parseBrackets() throws EquationMalformedException {
-        while(true) {
+    private void parseBrackets() {
+        while (true) {
             int index = getIndexOfNextBracket();
             if (index != -1) {
                 CalculationList childList = (CalculationList) calculationList.get(index);
                 CalculationListParser _parser = new CalculationListParser(childList);
                 CalculationObject parsedObject = _parser.parseCalculationList();
                 calculationList.set(index, parsedObject);
-            }else{
+            } else {
                 break;
             }
         }
     }
 
-    private void parseDotOperators() throws EquationMalformedException {
+    private void parseDotOperators() {
         int index = getNextDotOperator();
-        while(index >= 0) {
+        while (index >= 0) {
             parseStandardOperator(index);
             index = getNextDotOperator();
         }
     }
 
-    private void parseLineOperators() throws EquationMalformedException {
+    private void parseLineOperators() {
         int index = getNextLineOperator();
-        while(index >= 0) {
+        while (index >= 0) {
             parseStandardOperator(index);
             index = getNextLineOperator();
         }
     }
 
-    private void parseStandardOperator(int index) throws EquationMalformedException {
+    private void parseStandardOperator(int index) {
         CalculationOperator operator = (CalculationOperator) calculationList.get(index);
-        CalculationObject leftObject;
-        CalculationObject rightObject;
+        CalculationObject leftObject = null;
+        CalculationObject rightObject = null;
         try {
-            leftObject = (CalculationObject) calculationList.get(index -1);
-            rightObject = (CalculationObject) calculationList.get(index +1);
+            leftObject = (CalculationObject) calculationList.get(index - 1);
+            rightObject = (CalculationObject) calculationList.get(index + 1);
         } catch (IndexOutOfBoundsException e) {
-            throw new EquationMalformedException();
+            System.out.println(EquationMalformedException.MESSAGE);
         }
         operator.setLeftCalculationObject(leftObject);
         operator.setRightCalculationObject(rightObject);
 
-        removeUsedCalculationObjects(index);
+        if (rightObject != null) removeUsedCalculationObject(index + 1);
+        if (leftObject != null) removeUsedCalculationObject(index - 1);
     }
 
     private int getNextDotOperator() {
@@ -95,7 +96,7 @@ public class CalculationListParser {
     private int getFirstOperatorOf(CalculationOperator operator1, CalculationOperator operator2) {
         int op1Index = calculationList.indexOf(operator1);
         int op2Index = calculationList.indexOf(operator2);
-        if (noOperatorFound(op1Index, op2Index)) {
+        if (noOperatorFound(op1Index, op2Index) || listContainsOnlyOneItem()) {
             return -1;
         } else if (op1BeforeOp2(op1Index, op2Index)) {
             return op1Index;
@@ -106,6 +107,10 @@ public class CalculationListParser {
 
     private boolean noOperatorFound(int op1Index, int op2Index) {
         return op1Index == -1 && op2Index == -1;
+    }
+
+    private boolean listContainsOnlyOneItem() {
+        return calculationList.getFirst() == calculationList.getLast();
     }
 
     private boolean op1BeforeOp2(int op1Index, int op2Index) {
@@ -120,9 +125,8 @@ public class CalculationListParser {
         return calculationList.indexOf(new CalculationList(false));
     }
 
-    private void removeUsedCalculationObjects(int index) {
-        calculationList.remove(index +1);
-        calculationList.remove(index -1);
+    private void removeUsedCalculationObject(int index) {
+        calculationList.remove(index);
     }
 
 }

@@ -233,7 +233,7 @@ public class CalculationListUnitTest {
         assertEquals("2.001*13", list.toString());
     }
 
-    @Test(expected= EquationMalformedException.class)
+    @Test(expected= MathException.class)
     public void shouldCalculateFalse() throws Exception {
         CalculationList list = new CalculationList();
         list.addNumber(19);
@@ -242,6 +242,17 @@ public class CalculationListUnitTest {
         list.addSubtractOperator();
         Calculator calculator = new Calculator(list);
         calculator.getCalculationResult();
+    }
+
+    @Test
+    public void shouldCalculateFalseButDisplayRight() throws Exception {
+        CalculationList list = new CalculationList();
+        list.addNumber(19);
+        list.addSubtractOperator();
+        list.addNumber(10);
+        list.addSubtractOperator();
+        Calculator calculator = new Calculator(list);
+        assertEquals("19-10-", calculator.toString());
     }
 
     @Test(expected= MathException.class)

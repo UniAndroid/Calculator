@@ -10,6 +10,7 @@ import android.view.View;
 import us.team.awesome.calculator.math.CalculationList;
 import us.team.awesome.calculator.math.Calculator;
 import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
+import us.team.awesome.calculator.util.DivideByZeroException;
 import us.team.awesome.calculator.util.EquationMalformedException;
 import us.team.awesome.calculator.util.MathException;
 
@@ -38,7 +39,8 @@ public class EquationView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawRect(0, 0, getWidth(), getHeight(), backgroundPainter);
-        canvas.drawText(this.calculationList.toString(), 0, 50, foregroundPainter);
+//        canvas.drawText(this.calculationList.toString(), 0, 50, foregroundPainter);
+        calculator.draw(canvas);
         if (!this.ergebnisString.isEmpty()) {
             canvas.drawText(this.ergebnisString, getWidth() - (this.ergebnisString.length() * 30), getHeight() - 50, foregroundPainter);
         }
@@ -118,11 +120,11 @@ public class EquationView extends View {
             calculator.setEquation(this.calculationList);
             CalculationNumber result = calculator.getCalculationResult();
             this.ergebnisString = result.toString();
-            this.invalidate();
-        } catch (MathException | EquationMalformedException e) {
+        } catch (MathException e) {
             this.ergebnisString = "ERROR";
             e.printStackTrace();
         }
+        this.invalidate();
     }
 
     public String getCalculationString() {

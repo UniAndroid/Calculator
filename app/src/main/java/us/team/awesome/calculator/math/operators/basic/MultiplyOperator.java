@@ -1,5 +1,8 @@
 package us.team.awesome.calculator.math.operators.basic;
 
+import android.graphics.Canvas;
+import android.support.annotation.NonNull;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -7,6 +10,8 @@ import us.team.awesome.calculator.math.operators.CalculationObject;
 import us.team.awesome.calculator.math.operators.CalculationOperator;
 import us.team.awesome.calculator.util.Constants;
 import us.team.awesome.calculator.util.DivideByZeroException;
+import us.team.awesome.calculator.util.EquationMalformedException;
+import us.team.awesome.calculator.util.MathException;
 
 /**
  * Created by Stefan on 14.10.2016.
@@ -22,7 +27,10 @@ public class MultiplyOperator extends CalculationObject implements CalculationOp
     }
 
     @Override
-    public BigDecimal getValue() throws DivideByZeroException {
+    public BigDecimal getValue() throws MathException {
+        if(multiplier == null || multiplicand == null) {
+            throw new EquationMalformedException();
+        }
         BigDecimal _multiplier = multiplier.getValue();
         BigDecimal _multiplicand = multiplicand.getValue();
         return _multiplier.multiply(_multiplicand);
@@ -81,5 +89,10 @@ public class MultiplyOperator extends CalculationObject implements CalculationOp
             m.multiplicand = (CalculationObject) multiplicand.clone();
         }
         return m;
+    }
+
+    @Override
+    public void draw(@NonNull Canvas canvas) {
+
     }
 }

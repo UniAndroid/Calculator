@@ -4,16 +4,18 @@ package us.team.awesome.calculator.util;
  * Created by Stefan on 14.10.2016.
  */
 
-public class EquationMalformedException extends Exception {
-    public EquationMalformedException(String message, Exception e) {
-        super(message, e);
+public class EquationMalformedException extends MathException {
+    public static final String MESSAGE = "Die Gleichung ist nicht korrekt aufgebaut.";
+
+    public EquationMalformedException(String MESSAGE, Exception e) {
+        super(MESSAGE, e);
     }
 
     public EquationMalformedException(Exception e) {
-        super("Die Gleichung ist nicht korrekt aufgebaut.", e);
+        super(MESSAGE, e);
     }
 
     public EquationMalformedException() {
-        super("Die Gleichung ist nicht korrekt aufgebaut.");
+        super(MESSAGE);
     }
 }
