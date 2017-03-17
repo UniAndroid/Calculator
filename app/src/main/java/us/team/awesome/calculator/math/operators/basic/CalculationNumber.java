@@ -40,6 +40,11 @@ public class CalculationNumber extends CalculationObject {
         return value;
     }
 
+    @Override
+    public int getWidth() {
+        return 0;
+    }
+
     /**
      * This method adds <code>attachNum</code> to the <code>value</code> of CalculationNumber.
      * <p>It does not add mathematically. For example if <code>value</code> is 5.0, and

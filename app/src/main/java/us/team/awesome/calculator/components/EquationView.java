@@ -40,6 +40,8 @@ public class EquationView extends View {
         super.onDraw(canvas);
         canvas.drawRect(0, 0, getWidth(), getHeight(), backgroundPainter);
 //        canvas.drawText(this.calculationList.toString(), 0, 50, foregroundPainter);
+        calculator.setBounds(0, 0, getWidth(), getHeight());
+        System.out.println("EquationView bounds for calculator" + calculator.getBounds().toString());
         calculator.draw(canvas);
         if (!this.ergebnisString.isEmpty()) {
             canvas.drawText(this.ergebnisString, getWidth() - (this.ergebnisString.length() * 30), getHeight() - 50, foregroundPainter);

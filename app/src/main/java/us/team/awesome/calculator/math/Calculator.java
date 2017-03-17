@@ -3,6 +3,7 @@ package us.team.awesome.calculator.math;
 import android.graphics.Canvas;
 import android.graphics.ColorFilter;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
@@ -52,6 +53,7 @@ public class Calculator extends Drawable {
     public void draw(@NonNull Canvas canvas) {
         refreshTerm();
         if (term != null) {
+            term.setBounds(getBounds());
             term.draw(canvas);
         }
     }

@@ -37,6 +37,11 @@ public class SubtractOperator extends CalculationObject implements CalculationOp
     }
 
     @Override
+    public int getWidth() {
+        return 0;
+    }
+
+    @Override
     public CalculationObject getLeftCalculationObject() {
         return minuend;
     }

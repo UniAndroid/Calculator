@@ -20,6 +20,7 @@ public abstract class CalculationObject extends Drawable implements Cloneable{
     private Integer calculationSequence;
     private int alpha;
     protected Paint color;
+    protected final int STANDARD_MARGIN = 15;
 
     public CalculationObject(int calculationSequence) {
         this.calculationSequence = calculationSequence;
@@ -33,6 +34,8 @@ public abstract class CalculationObject extends Drawable implements Cloneable{
     }
 
     public abstract BigDecimal getValue() throws MathException;
+
+    public abstract int getWidth();
 
     public Object clone(){
         CalculationObject o = null;

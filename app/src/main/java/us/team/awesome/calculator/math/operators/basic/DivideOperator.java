@@ -41,6 +41,11 @@ public class DivideOperator extends CalculationObject implements CalculationOper
     }
 
     @Override
+    public int getWidth() {
+        return 0;
+    }
+
+    @Override
     public CalculationObject getLeftCalculationObject() {
         return dividend;
     }
