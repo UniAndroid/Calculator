@@ -118,7 +118,7 @@ public class Preview extends ViewGroup implements SurfaceHolder.Callback {
             final int height = b - t;
 
             int previewWidth = width;
-            int previewHeight = height;
+            int previewHeight = height - 100;
             if (mPreviewSize != null) {
                 previewWidth = mPreviewSize.width;
                 previewHeight = mPreviewSize.height;
@@ -165,7 +165,7 @@ public class Preview extends ViewGroup implements SurfaceHolder.Callback {
         Camera.Size optimalSize = null;
         double minDiff = Double.MAX_VALUE;
 
-        int targetHeight = h;
+        int targetHeight = h - 100;
 
         // Try to find an size match aspect ratio and size
         for (Camera.Size size : sizes) {
@@ -197,6 +197,7 @@ public class Preview extends ViewGroup implements SurfaceHolder.Callback {
             Camera.Parameters parameters = mCamera.getParameters();
             parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
             parameters.setRotation(270);
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
             requestLayout();
 
             mCamera.setParameters(parameters);
