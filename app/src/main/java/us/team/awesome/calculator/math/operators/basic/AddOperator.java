@@ -23,8 +23,8 @@ import us.team.awesome.calculator.util.MathException;
 
 public class AddOperator extends CalculationObject implements CalculationOperator{
 
-    private CalculationObject augend;
-    private CalculationObject addend;
+    private CalculationObject augend; // left
+    private CalculationObject addend; // right
     private final int WIDTH = 40;
     private final int HEIGHT = WIDTH;
 

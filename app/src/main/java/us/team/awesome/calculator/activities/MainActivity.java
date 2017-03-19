@@ -2,9 +2,13 @@ package us.team.awesome.calculator.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -19,11 +23,11 @@ import us.team.awesome.calculator.R;
 import us.team.awesome.calculator.components.EquationView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, CalculatorFragment.OnFragmentInteractionListener, CameraFragment.OnFragmentInteractionListener{
 
     private Button clearButton;
     private EquationView equationView;
-    private boolean autoCalculate;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,26 +45,8 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        this.equationView = (EquationView) findViewById(R.id.equationView);
+        displayScreen(R.id.nav_camera);
 
-        this.clearButton = (Button) findViewById(R.id.clearButton);
-        this.clearButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                equationView.clear();
-            }
-        });
-
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        autoCalculate = sharedPref.getBoolean(SettingsActivity.AUTO_CALCULATE, false);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        autoCalculate = sharedPref.getBoolean(SettingsActivity.AUTO_CALCULATE, false);
     }
 
     @Override
@@ -101,12 +87,17 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
+        displayScreen(item.getItemId());
+        return true;
+    }
+
+    private void displayScreen(int id) {
+        Fragment fragment = null;
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            fragment = getCalculatorFragment();
         } else if (id == R.id.nav_gallery) {
-
+            fragment = getCameraFragment();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -117,53 +108,28 @@ public class MainActivity extends AppCompatActivity
 
         }
 
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frame, fragment);
+        ft.commit();
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 
-    public void numberClickedListener(View view) {
-        Button clickedButton = (Button) view;
-        String number = (String) clickedButton.getText();
-        equationView.addNumber(number);
-        if(autoCalculate) {
-            equationView.calculate();
-        }
+    private Fragment getCameraFragment(){
+        return new CameraFragment();
     }
 
-    public void multiplyClickedListener(View view) {
-        equationView.addMultiplyOperator();
+    private Fragment getCalculatorFragment(){
+        return new CalculatorFragment();
     }
 
-    public void divideClickedListener(View view) {
-        equationView.addDivideOperator();
-    }
 
-    public void addClickedListener(View view) {
-        equationView.addAddOperator();
-    }
+    // Klasse muss diese Methode implementieren, kann aber anscheinend leer bleiben
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
-    public void subtractClickedListener(View view) {
-        equationView.addSubtractOperator();
-    }
-
-    public void colonClickedListener(View view) {
-        equationView.addDecimalPoint();
-    }
-
-    public void calculateClickedListener(View view) {
-        equationView.calculate();
-    }
-
-    public void bracketLeftClickedListener(View view) {
-        equationView.addLeftBracket();
-    }
-
-    public void bracketRightClickedListener(View view) {
-        equationView.addRightBracket();
-    }
-
-    private String getButtonSign(View view) {
-        return (String) ((Button) view).getText();
     }
 }
