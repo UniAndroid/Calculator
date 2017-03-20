@@ -54,6 +54,7 @@ public class Calculator extends Drawable {
         refreshTerm();
         if (term != null) {
             term.setBounds(getBounds());
+            canvas.setDensity(100);
             term.draw(canvas);
         }
     }

@@ -1,6 +1,7 @@
 package us.team.awesome.calculator.math.operators.basic;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 
 import java.math.BigDecimal;
@@ -17,6 +18,8 @@ public class CalculationNumber extends CalculationObject {
     private BigDecimal value;
     private boolean hasDecimalPoint = false;
     private boolean hasNumberAfterDecimalPoint = false;
+    private final int HEIGHT = 40;
+    private final int TEXT_SIZE = 40;
 
     public CalculationNumber(int num) {
         this(new BigDecimal(Double.toString((double) num)));
@@ -42,7 +45,17 @@ public class CalculationNumber extends CalculationObject {
 
     @Override
     public int getWidth() {
-        return 0;
+//        color.setTextSize(TEXT_SIZE);
+        return (int) color.measureText(value.toString()) + 2 * STANDARD_MARGIN;
+    }
+
+    @Override
+    public void draw(@NonNull Canvas canvas) {
+        Rect bounds = getBounds();
+        double relation = Math.sqrt(canvas.getWidth() * canvas.getHeight());
+        relation = relation / 250;
+        color.setTextSize((float) (TEXT_SIZE * relation));
+        canvas.drawText(toString(), bounds.left + STANDARD_MARGIN, bounds.centerY(), color);
     }
 
     /**
@@ -125,10 +138,5 @@ public class CalculationNumber extends CalculationObject {
         n = (CalculationNumber) super.clone();
         n.value = value;
         return n;
-    }
-
-    @Override
-    public void draw(@NonNull Canvas canvas) {
-
     }
 }

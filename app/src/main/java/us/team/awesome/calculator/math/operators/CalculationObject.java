@@ -27,10 +27,9 @@ public abstract class CalculationObject extends Drawable implements Cloneable{
         this.alpha = 255;
 
         color = new Paint();
-        color.setStyle(Paint.Style.STROKE);
+        color.setStyle(Paint.Style.FILL);
         color.setColor(Color.BLACK);
-        color.setTextSize(50);
-        color.setStrokeWidth(10);
+        color.setStrokeWidth(5);
     }
 
     public abstract BigDecimal getValue() throws MathException;
