@@ -76,29 +76,28 @@ public class AddOperator extends CalculationObject implements CalculationOperato
     @Override
     public void draw(@NonNull Canvas canvas) {
         Rect bounds = getBounds();
-        int augendWidth = augend == null ? 0 : augend.getWidth();
+
+        int augendWidth = augend != null ?  augend.getWidth() : 0;
         Rect augendBounds = new Rect(bounds.left, bounds.top, augendWidth, bounds.bottom);
         if(augend != null) {
             augend.setBounds(augendBounds);
             augend.draw(canvas);
         }
 
-        int centerX = augendBounds.left + STANDARD_MARGIN + WIDTH/2;
-        int centerY = (bounds.bottom - bounds.top) / 2;
+        drawAddOperator(canvas, bounds, augendBounds);
 
-        //horizontal line
-        int horizontalStartX = centerX - WIDTH/2;
-        canvas.drawLine(horizontalStartX, centerY, horizontalStartX + WIDTH, centerY, color);
-
-        //vertical line
-        int verticalStartY = centerY - WIDTH/2;
-        canvas.drawLine(centerX, verticalStartY, centerX, verticalStartY + WIDTH, color);
+        if(addend != null) {
+            int addendWidth = addend.getWidth();
+            Rect addendBounds = new Rect(getWidth() - addendWidth, bounds.top, bounds.right, bounds.bottom);
+            addend.setBounds(addendBounds);
+            addend.draw(canvas);
+        }
     }
 
     @Override
     public int getWidth() {
-        int augendWidth = augend.getWidth();
-        int addendWidth = addend.getWidth();
+        int augendWidth = augend != null ? augend.getWidth() : 0;
+        int addendWidth = addend != null ? addend.getWidth() : 0;
         return augendWidth + WIDTH + addendWidth + 2*STANDARD_MARGIN;
     }
 
@@ -124,5 +123,20 @@ public class AddOperator extends CalculationObject implements CalculationOperato
             o.addend = (CalculationObject) addend.clone();
         }
         return o;
+    }
+
+    //############private############
+
+    private void drawAddOperator(@NonNull Canvas canvas, Rect bounds, Rect augendBounds) {
+        int centerX = augendBounds.left + STANDARD_MARGIN + WIDTH/2;
+        int centerY = (bounds.bottom - bounds.top) / 2;
+
+        //horizontal line
+        int horizontalStartX = centerX - WIDTH/2;
+        canvas.drawLine(horizontalStartX, centerY, horizontalStartX + WIDTH, centerY, color);
+
+        //vertical line
+        int verticalStartY = centerY - WIDTH/2;
+        canvas.drawLine(centerX, verticalStartY, centerX, verticalStartY + WIDTH, color);
     }
 }

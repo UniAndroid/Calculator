@@ -70,14 +70,8 @@ public class CalculationListParser {
 
     private void parseStandardOperator(int index) {
         CalculationOperator operator = (CalculationOperator) calculationList.get(index);
-        CalculationObject leftObject = null;
-        CalculationObject rightObject = null;
-        try {
-            leftObject = (CalculationObject) calculationList.get(index - 1);
-            rightObject = (CalculationObject) calculationList.get(index + 1);
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println(EquationMalformedException.MESSAGE);
-        }
+        CalculationObject leftObject = getCalculationObjectAt(index - 1);
+        CalculationObject rightObject = getCalculationObjectAt(index + 1);
         operator.setLeftCalculationObject(leftObject);
         operator.setRightCalculationObject(rightObject);
 
@@ -129,4 +123,12 @@ public class CalculationListParser {
         calculationList.remove(index);
     }
 
+    private CalculationObject getCalculationObjectAt(int index) {
+        try {
+            return (CalculationObject) calculationList.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println(EquationMalformedException.MESSAGE);
+            return null;
+        }
+    }
 }
