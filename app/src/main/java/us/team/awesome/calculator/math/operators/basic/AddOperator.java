@@ -101,6 +101,11 @@ public class AddOperator extends CalculationObject implements CalculationOperato
         return augendWidth + WIDTH + addendWidth + 2*STANDARD_MARGIN;
     }
 
+    @Override
+    public int getHeight() {
+        return HEIGHT;
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if(augend != null) {
@@ -128,7 +133,7 @@ public class AddOperator extends CalculationObject implements CalculationOperato
     //############private############
 
     private void drawAddOperator(@NonNull Canvas canvas, Rect bounds, Rect augendBounds) {
-        int centerX = augendBounds.left + STANDARD_MARGIN + WIDTH/2;
+        int centerX = augendBounds.right + STANDARD_MARGIN + WIDTH/2;
         int centerY = (bounds.bottom - bounds.top) / 2;
 
         //horizontal line

@@ -1,6 +1,7 @@
 package us.team.awesome.calculator.math.operators.basic;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 
 import java.math.BigDecimal;
@@ -21,6 +22,8 @@ public class MultiplyOperator extends CalculationObject implements CalculationOp
 
     private CalculationObject multiplier;
     private CalculationObject multiplicand;
+    private final int WIDTH = 40;
+    private final int HEIGHT = WIDTH;
 
     public MultiplyOperator() {
         super(Constants.CalculationSequence.MULTIPLY);
@@ -38,7 +41,14 @@ public class MultiplyOperator extends CalculationObject implements CalculationOp
 
     @Override
     public int getWidth() {
-        return 0;
+        int multiplierWidth = multiplier != null ? multiplier.getWidth() : 0;
+        int multiplicandWidth = multiplicand != null ? multiplicand.getWidth() : 0;
+        return multiplierWidth + WIDTH + multiplicandWidth + 2*STANDARD_MARGIN;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     @Override
@@ -98,6 +108,43 @@ public class MultiplyOperator extends CalculationObject implements CalculationOp
 
     @Override
     public void draw(@NonNull Canvas canvas) {
+        Rect bounds = getBounds();
 
+        int multiplierWidth = multiplier != null ?  multiplier.getWidth() : 0;
+        Rect multiplierBounds = new Rect(bounds.left, bounds.top, multiplierWidth, bounds.bottom);
+        if(multiplier != null) {
+            multiplier.setBounds(multiplierBounds);
+            multiplier.draw(canvas);
+        }
+
+        drawMultiplyOperator(canvas, bounds, multiplierBounds);
+
+        if(multiplicand != null) {
+            int multiplicandWidth = multiplicand.getWidth();
+            Rect multiplicandBounds = new Rect(getWidth() - multiplicandWidth, bounds.top, bounds.right, bounds.bottom);
+            multiplicand.setBounds(multiplicandBounds);
+            multiplicand.draw(canvas);
+        }
+    }
+
+    //############private############
+
+    private void drawMultiplyOperator(Canvas canvas, Rect bounds, Rect multiplierBounds) {
+        int centerX = multiplierBounds.right + STANDARD_MARGIN + WIDTH/2;
+        int centerY = (bounds.bottom - bounds.top) / 2;
+
+        //first line
+        int horizontalStartX = centerX - WIDTH/4;
+        int horizontalStartY = centerY - WIDTH/4;
+        int horizontalStopX = horizontalStartX + WIDTH/2;
+        int horizontalStopY = horizontalStartY + WIDTH/2;
+        canvas.drawLine(horizontalStartX, horizontalStartY, horizontalStopX, horizontalStopY, color);
+
+        //second line
+        int verticalStartX = centerX - WIDTH/4;
+        int verticalStartY = centerY + WIDTH/4;
+        int verticalStopX = verticalStartX + WIDTH/2;
+        int verticalStopY = verticalStartY - WIDTH/2;
+        canvas.drawLine(verticalStartX, verticalStartY, verticalStopX, verticalStopY, color);
     }
 }

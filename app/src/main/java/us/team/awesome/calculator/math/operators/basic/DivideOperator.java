@@ -1,6 +1,7 @@
 package us.team.awesome.calculator.math.operators.basic;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 
 import java.math.BigDecimal;
@@ -21,6 +22,8 @@ public class DivideOperator extends CalculationObject implements CalculationOper
 
     private CalculationObject dividend;
     private CalculationObject divisor;
+    private final int WIDTH = 60;
+    private final int HEIGHT = 80;
 
     public DivideOperator() {
         super(Constants.CalculationSequence.DIVIDE);
@@ -42,7 +45,26 @@ public class DivideOperator extends CalculationObject implements CalculationOper
 
     @Override
     public int getWidth() {
-        return 0;
+        int dividendWidth = dividend != null ? dividend.getWidth() : 0;
+        int divisorWidth = divisor != null ? divisor.getWidth() : 0;
+        int divideOperatorWidth = dividendWidth >= divisorWidth ? dividendWidth : divisorWidth;
+        if(WIDTH > divideOperatorWidth) {
+            return WIDTH;
+        }else{
+            return divideOperatorWidth;
+        }
+    }
+
+    @Override
+    public int getHeight() {
+        int dividendHeight = dividend != null ? dividend.getHeight() : 0;
+        int divisorHeight = divisor != null ? divisor.getHeight() : 0;
+        int divideOperatorHeight = dividendHeight + divisorHeight + STANDARD_MARGIN * 2;
+        if(HEIGHT > divideOperatorHeight) {
+            return HEIGHT;
+        }else{
+            return divideOperatorHeight;
+        }
     }
 
     @Override
@@ -102,6 +124,30 @@ public class DivideOperator extends CalculationObject implements CalculationOper
 
     @Override
     public void draw(@NonNull Canvas canvas) {
+        Rect bounds = getBounds();
 
+        int dividendBottom = dividend != null ? bounds.top + dividend.getHeight() : bounds.bottom;
+        Rect dividendBounds = new Rect(bounds.left, bounds.top + STANDARD_MARGIN, bounds.right, dividendBottom);
+        if(dividend != null) {
+            dividend.setBounds(dividendBounds);
+            dividend.draw(canvas);
+        }
+
+        drawDivideOperator(canvas, bounds, dividendBounds);
+
+        if(divisor != null) {
+            Rect divisorBounds = new Rect(bounds.left, dividendBounds.bottom, bounds.right, bounds.bottom);
+            divisor.setBounds(divisorBounds);
+            divisor.draw(canvas);
+        }
+    }
+
+    //############private############
+
+    private void drawDivideOperator(Canvas canvas, Rect bounds, Rect dividendBounds) {
+        int startY = dividendBounds.bottom + STANDARD_MARGIN;
+        int startX = bounds.left + STANDARD_MARGIN;
+
+        canvas.drawLine(startX, startY, startX + getWidth(), startY, color);
     }
 }

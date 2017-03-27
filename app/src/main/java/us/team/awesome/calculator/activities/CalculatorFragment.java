@@ -233,6 +233,10 @@ public class CalculatorFragment extends Fragment implements View.OnClickListener
                 equationView.addRightBracket();
                 break;
             }
+            case R.id.clearButton: {
+                equationView.clear();
+                break;
+            }
         }
 
     }
