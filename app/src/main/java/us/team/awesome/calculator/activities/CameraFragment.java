@@ -35,6 +35,7 @@ import java.io.OutputStream;
 import java.util.Random;
 
 import us.team.awesome.calculator.R;
+import us.team.awesome.calculator.util.Input;
 import us.team.awesome.calculator.util.Preview;
 
 /**
@@ -50,8 +51,6 @@ public class CameraFragment extends Fragment implements Camera.PreviewCallback {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    private static final char[] VALID_INPUT = {'0','1', '2', '3', '4', '5', '6', '7', '8', '9', '+','-','*', '/'};
 
     private String imagePath;
     private Preview mPreview;
@@ -183,7 +182,7 @@ public class CameraFragment extends Fragment implements Camera.PreviewCallback {
         ocrResult = mTess.getUTF8Text();
         Log.w("OCR PREVIEW",ocrResult);
         char[] result = ocrResult.toCharArray();
-        boolean validScan = isValidScan(result);
+        boolean validScan = Input.valid(result);
         if(validScan){
             FragmentTransaction ft = this.getActivity().getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frame, CalculatorFragment.newInstance("TEST 123"));
@@ -193,24 +192,6 @@ public class CameraFragment extends Fragment implements Camera.PreviewCallback {
         }
 
     }
-
-    private boolean isValidScan(char[] result) {
-        boolean validScan = true;
-        for(int i = 0; i < result.length; i++){
-            for(int j = 0; j < VALID_INPUT.length; j++){
-                if(result[i] == VALID_INPUT[j]){
-                    break;
-                }else if(j == (VALID_INPUT.length - 1) && result[i] != VALID_INPUT[j]){
-                    validScan = false;
-                }
-            }
-            if(!validScan){
-                break;
-            }
-        }
-        return validScan;
-    }
-
 
     private void copyFiles() {
         try {

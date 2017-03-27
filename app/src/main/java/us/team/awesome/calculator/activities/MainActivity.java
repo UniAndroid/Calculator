@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             fragment = getCameraFragment();
         } else if (id == R.id.nav_slideshow) {
-
+            fragment = getGraphFragment();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
@@ -126,6 +126,10 @@ public class MainActivity extends AppCompatActivity
         return new CalculatorFragment();
     }
 
+
+    public Fragment getGraphFragment() {
+        return new GraphFragment();
+    }
 
     // Klasse muss diese Methode implementieren, kann aber anscheinend leer bleiben
     @Override
