@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,6 +18,8 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.listener.ChartTouchListener;
+import com.github.mikephil.charting.listener.OnChartGestureListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +40,7 @@ import us.team.awesome.calculator.util.MathException;
  * Use the {@link GraphFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GraphFragment extends Fragment {
+public class GraphFragment extends Fragment implements OnChartGestureListener {
 
     private OnFragmentInteractionListener mListener;
     // in this example, a LineChart is initialized from xml
@@ -47,6 +50,9 @@ public class GraphFragment extends Fragment {
 
     private EditText editText;
     private Button button;
+
+    private int index = 0;
+    private final int length = 10;
 
     public GraphFragment() {
         // Required empty public constructor
@@ -86,6 +92,7 @@ public class GraphFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 List<Entry>dataList = calculateFunction(editText.getText().toString().toCharArray());
+                index += 10;
                 data = new LineDataSet(dataList, "Test");
                 LineData _dat = new LineData(data);
                 chart.setData(_dat);
@@ -95,12 +102,13 @@ public class GraphFragment extends Fragment {
 
         this.chart = (LineChart) view.findViewById(R.id.chart);
         List<Entry> entries = new ArrayList<Entry>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < length; i++) {
             entries.add(new Entry(i, i));
         }
         data = new LineDataSet(entries, "Test");
         LineData lineData = new LineData(data);
         chart.setData(lineData);
+        chart.setOnChartGestureListener(this);
         chart.invalidate(); // refresh
         return view;
     }
@@ -108,7 +116,7 @@ public class GraphFragment extends Fragment {
     private List<Entry> calculateFunction(char[] chars) {
         List<Entry> data = new ArrayList<>();
         if (Input.validFunction(chars)) {
-            for (int i = 0; i <= 10; i++) {
+            for (int i = index; i <= index + length; i++) {
                 CalculationList calcList = new CalculationList();
                 for (char _char : chars) {
                     Log.d("INPUT", ""+_char);
@@ -148,7 +156,7 @@ public class GraphFragment extends Fragment {
                             break;
                         }
                         case 'N': {
-                            if(calcList.getLast() instanceof CalculationNumber){
+                            if(!calcList.isEmpty() && calcList.getLast() instanceof CalculationNumber){
                                 calcList.addMultiplyOperator();
                             }
                             calcList.addNumber(i);
@@ -185,6 +193,60 @@ public class GraphFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onChartGestureStart(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+        Log.d("gesture start", me.toString());
+    }
+
+    @Override
+    public void onChartGestureEnd(MotionEvent me, ChartTouchListener.ChartGesture lastPerformedGesture) {
+        Log.d("gesture end", me.toString());
+    }
+
+    @Override
+    public void onChartLongPressed(MotionEvent me) {
+
+    }
+
+    @Override
+    public void onChartDoubleTapped(MotionEvent me) {
+
+    }
+
+    @Override
+    public void onChartSingleTapped(MotionEvent me) {
+
+    }
+
+    @Override
+    public void onChartFling(MotionEvent me1, MotionEvent me2, float velocityX, float velocityY) {
+       if(velocityX <= 0){ // richtung minus x gehen
+            this.index += 10;
+       }else { //richtung plus x gehen
+           this.index -= 10;
+       }
+        List<Entry>dataList = calculateFunction(editText.getText().toString().toCharArray());
+        for(int i = 0; i < dataList.size(); i++){
+            Log.d("DATA", dataList.get(i).getX() + "#ä#####" + dataList.get(i).getY());
+        }
+        data = new LineDataSet(dataList, "Test");
+        LineData _dat = new LineData(data);
+        chart.setData(null);
+        chart.setData(_dat);
+        chart.invalidate();
+    }
+
+    @Override
+    public void onChartScale(MotionEvent me, float scaleX, float scaleY) {
+        Log.d("scale", me.toString() + "###"+  scaleX+ "###"+ scaleY);
+
+    }
+
+    @Override
+    public void onChartTranslate(MotionEvent me, float dX, float dY) {
+        Log.d("translate", me.toString() + "###"+  dX+ "###"+ dY);
     }
 
 
