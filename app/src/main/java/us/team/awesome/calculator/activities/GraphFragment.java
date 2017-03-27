@@ -111,6 +111,7 @@ public class GraphFragment extends Fragment {
             for (int i = 0; i <= 10; i++) {
                 CalculationList calcList = new CalculationList();
                 for (char _char : chars) {
+                    Log.d("INPUT", ""+_char);
                     switch (_char) {
                         case '0':
                         case '1':
@@ -122,7 +123,7 @@ public class GraphFragment extends Fragment {
                         case '7':
                         case '8':
                         case '9': {
-                            calcList.addNumber(_char);
+                            calcList.addNumber(""+_char);
                             break;
                         }
                         case '+': {
@@ -147,11 +148,16 @@ public class GraphFragment extends Fragment {
                             break;
                         }
                         case 'N': {
+                            if(calcList.getLast() instanceof CalculationNumber){
+                                calcList.addMultiplyOperator();
+                            }
                             calcList.addNumber(i);
                             break;
                         }
                     }
+                    Log.d("CALCLIST", calcList.getLast().toString());
                 }
+                Log.d("FUNCTION", calcList.toString());
                 Calculator calculator = new Calculator(calcList);
                 CalculationNumber result = null;
                 try {
