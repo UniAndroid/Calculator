@@ -35,6 +35,7 @@ public abstract class CalculationObject extends Drawable implements Cloneable{
     public abstract BigDecimal getValue() throws MathException;
 
     public abstract int getWidth();
+    public abstract int getHeight();
 
     public Object clone(){
         CalculationObject o = null;

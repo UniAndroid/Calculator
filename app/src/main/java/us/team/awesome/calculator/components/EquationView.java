@@ -147,6 +147,7 @@ public class EquationView extends View {
      */
     private void updateEquation() {
         // dadurch wird die onDraw() Methode erneut aufgerufen!
+        calculator.setEquation(this.calculationList);
         this.invalidate();
     }
 }

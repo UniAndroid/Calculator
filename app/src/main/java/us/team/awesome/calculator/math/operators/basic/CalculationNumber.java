@@ -50,12 +50,20 @@ public class CalculationNumber extends CalculationObject {
     }
 
     @Override
+    public int getHeight() {
+        //http://stackoverflow.com/questions/3654321/measuring-text-height-to-be-drawn-on-canvas-android
+        Rect bounds = new Rect();
+        color.getTextBounds(value.toString(), 0, value.toString().length(), bounds);
+        return bounds.height();
+    }
+
+    @Override
     public void draw(@NonNull Canvas canvas) {
         Rect bounds = getBounds();
         double relation = Math.sqrt(canvas.getWidth() * canvas.getHeight());
         relation = relation / 250;
         color.setTextSize((float) (TEXT_SIZE * relation));
-        canvas.drawText(toString(), bounds.left + STANDARD_MARGIN, bounds.centerY(), color);
+        canvas.drawText(toString(), bounds.left + STANDARD_MARGIN, bounds.centerY() + STANDARD_MARGIN * 2, color);
     }
 
     /**

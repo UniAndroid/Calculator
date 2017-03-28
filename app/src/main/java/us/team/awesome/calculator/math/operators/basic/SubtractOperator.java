@@ -1,6 +1,7 @@
 package us.team.awesome.calculator.math.operators.basic;
 
 import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.support.annotation.NonNull;
 
 import java.math.BigDecimal;
@@ -21,6 +22,8 @@ public class SubtractOperator extends CalculationObject implements CalculationOp
 
     private CalculationObject minuend;
     private CalculationObject subtrahend;
+    private final int WIDTH = 40;
+    private final int HEIGHT = WIDTH;
 
     public SubtractOperator() {
         super(Constants.CalculationSequence.SUBTRACT);
@@ -38,7 +41,14 @@ public class SubtractOperator extends CalculationObject implements CalculationOp
 
     @Override
     public int getWidth() {
-        return 0;
+        int minuendWidth = minuend != null ? minuend.getWidth() : 0;
+        int subtrahendWidth = subtrahend != null ? subtrahend.getWidth() : 0;
+        return minuendWidth + WIDTH + subtrahendWidth + 2*STANDARD_MARGIN;
+    }
+
+    @Override
+    public int getHeight() {
+        return HEIGHT;
     }
 
     @Override
@@ -98,6 +108,33 @@ public class SubtractOperator extends CalculationObject implements CalculationOp
 
     @Override
     public void draw(@NonNull Canvas canvas) {
+        Rect bounds = getBounds();
 
+        int minuendWidth = minuend != null ?  minuend.getWidth() : 0;
+        Rect minuendBounds = new Rect(bounds.left, bounds.top, minuendWidth, bounds.bottom);
+        if(minuend != null) {
+            minuend.setBounds(minuendBounds);
+            minuend.draw(canvas);
+        }
+
+        drawSubtractOperator(canvas, bounds, minuendBounds);
+
+        if(subtrahend != null) {
+            int subtrahendWidth = subtrahend.getWidth();
+            Rect subtrahendBounds = new Rect(getWidth() - subtrahendWidth, bounds.top, bounds.right, bounds.bottom);
+            subtrahend.setBounds(subtrahendBounds);
+            subtrahend.draw(canvas);
+        }
+    }
+
+    //############private############
+
+    private void drawSubtractOperator(Canvas canvas, Rect bounds, Rect minuendBounds) {
+        int centerX = minuendBounds.right + STANDARD_MARGIN + WIDTH/2;
+        int centerY = (bounds.bottom - bounds.top) / 2;
+
+        //horizontal line
+        int horizontalStartX = centerX - WIDTH/2;
+        canvas.drawLine(horizontalStartX, centerY, horizontalStartX + WIDTH, centerY, color);
     }
 }

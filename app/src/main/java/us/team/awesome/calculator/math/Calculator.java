@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import java.math.BigDecimal;
 
@@ -52,6 +53,7 @@ public class Calculator extends Drawable {
     @Override
     public void draw(@NonNull Canvas canvas) {
         refreshTerm();
+        Log.d("MESSAGE", "Drawing term: " + term);
         if (term != null) {
             term.setBounds(getBounds());
             canvas.setDensity(100);
