@@ -38,7 +38,7 @@
 
             <Button
                 android:id="@+id/bracketLeftButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -46,7 +46,7 @@
 
             <Button
                 android:id="@+id/bracketRightButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -54,7 +54,7 @@
 
             <Button
                 android:id="@+id/divideButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -62,7 +62,7 @@
 
             <Button
                 android:id="@+id/clearButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -80,7 +80,7 @@
 
             <Button
                 android:id="@+id/sevenButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -88,7 +88,7 @@
 
             <Button
                 android:id="@+id/eightButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -96,7 +96,7 @@
 
             <Button
                 android:id="@+id/nineButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -104,7 +104,7 @@
 
             <Button
                 android:id="@+id/multiplyButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -122,7 +122,7 @@
 
             <Button
                 android:id="@+id/fourButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -130,7 +130,7 @@
 
             <Button
                 android:id="@+id/fiveButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -138,7 +138,7 @@
 
             <Button
                 android:id="@+id/sixButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -146,7 +146,7 @@
 
             <Button
                 android:id="@+id/substractButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -164,7 +164,7 @@
 
             <Button
                 android:id="@+id/oneButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -172,7 +172,7 @@
 
             <Button
                 android:id="@+id/twoButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -180,7 +180,7 @@
 
             <Button
                 android:id="@+id/threeButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -188,7 +188,7 @@
 
             <Button
                 android:id="@+id/addButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -206,7 +206,7 @@
 
             <Button
                 android:id="@+id/zeroButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
@@ -214,7 +214,7 @@
 
             <Button
                 android:id="@+id/collonButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -222,7 +222,7 @@
 
             <Button
                 android:id="@+id/equalButton"
-                style="@style/defaultTextSize"
+                android:background="@drawable/ripple"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
