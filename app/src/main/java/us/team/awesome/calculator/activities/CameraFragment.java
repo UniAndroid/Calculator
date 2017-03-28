@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ import java.io.OutputStream;
 import java.util.Random;
 
 import us.team.awesome.calculator.R;
+import us.team.awesome.calculator.util.Input;
 import us.team.awesome.calculator.util.Preview;
 
 /**
@@ -174,13 +176,22 @@ public class CameraFragment extends Fragment implements Camera.PreviewCallback {
     }
 
     public void processImage(View view){
-        String OCRresult = null;
-        saveImage(byteArray);
+        String ocrResult = null;
+        saveImage(byteArray); // just for debugging
         mTess.setImage(byteArray);
-        OCRresult = mTess.getUTF8Text();
-        Log.w("OCR PREVIEW",OCRresult);
-    }
+        ocrResult = mTess.getUTF8Text();
+        Log.w("OCR PREVIEW",ocrResult);
+        char[] result = ocrResult.toCharArray();
+        boolean validScan = Input.valid(result);
+        if(validScan){
+            FragmentTransaction ft = this.getActivity().getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.frame, CalculatorFragment.newInstance("TEST 123"));
+            ft.commit();
+        }else {
+            Log.d("OCR", "scan contains invalid characters");
+        }
 
+    }
 
     private void copyFiles() {
         try {
