@@ -30,4 +30,6 @@
     <string name="bracketRight">)</string>
     <string name="autoCalculateSummary">Wenn diese Option aktiviert ist, wird nach jeder Eingabe</string>
     <string name="autoCalculate">Auomatische Berechnung</string>
+    <string name="customRenderSummary">Aktivieren, um die Custom Render Engine zu benutzen. ACHTUNG: es werden nicht alle Inhalte korrekt dargestellt.</string>
+    <string name="customRenderTitle">Custom Render Engine</string>
 </resources>

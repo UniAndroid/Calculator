@@ -33,4 +33,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="customRenderSummary">Aktivieren, um die Custom Render Engine zu benutzen. ACHTUNG: es werden nicht alle Inhalte korrekt dargestellt.</string>
+    <string name="customRenderTitle">Custom Render Engine</string>
 </resources>

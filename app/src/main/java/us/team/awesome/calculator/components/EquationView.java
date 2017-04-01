@@ -1,17 +1,18 @@
 package us.team.awesome.calculator.components;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.View;
 
+import us.team.awesome.calculator.activities.SettingsActivity;
 import us.team.awesome.calculator.math.CalculationList;
 import us.team.awesome.calculator.math.Calculator;
 import us.team.awesome.calculator.math.operators.basic.CalculationNumber;
-import us.team.awesome.calculator.util.DivideByZeroException;
-import us.team.awesome.calculator.util.EquationMalformedException;
 import us.team.awesome.calculator.util.MathException;
 
 /**
@@ -29,20 +30,29 @@ public class EquationView extends View {
     private CalculationList calculationList;
     private Calculator calculator;
 
+    private boolean autoCalculate;
+    private boolean customDrawer;
+
     public EquationView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
         this.calculationList = new CalculationList(true);
         this.calculator = new Calculator(calculationList);
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        autoCalculate = sharedPref.getBoolean(SettingsActivity.AUTO_CALCULATE, false);
+        customDrawer = sharedPref.getBoolean(SettingsActivity.CUSTOM_DRAWER, false);
     }
 
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawRect(0, 0, getWidth(), getHeight(), backgroundPainter);
-//        canvas.drawText(this.calculationList.toString(), 0, 50, foregroundPainter);
-        calculator.setBounds(0, 0, getWidth(), getHeight());
-        System.out.println("EquationView bounds for calculator" + calculator.getBounds().toString());
-        calculator.draw(canvas);
+        if (customDrawer) {
+            calculator.setBounds(0, 0, getWidth(), getHeight());
+            System.out.println("EquationView bounds for calculator" + calculator.getBounds().toString());
+            calculator.draw(canvas);
+        } else {
+            canvas.drawText(this.calculationList.toString(), 0, 50, foregroundPainter);
+        }
         if (!this.ergebnisString.isEmpty()) {
             canvas.drawText(this.ergebnisString, getWidth() - (this.ergebnisString.length() * 30), getHeight() - 50, foregroundPainter);
         }
@@ -68,12 +78,16 @@ public class EquationView extends View {
 
     public void addNumber(int number) {
         this.calculationList.addNumber(number);
-        this.updateEquation();
+        if (autoCalculate) {
+            calculate();
+        } else {
+            this.updateEquation();
+        }
     }
 
     public void addNumber(String number) {
-        this.calculationList.addNumber(number);
-        this.updateEquation();
+        int _num = Integer.parseInt(number);
+        this.addNumber(_num);
     }
 
     public void addAddOperator() {

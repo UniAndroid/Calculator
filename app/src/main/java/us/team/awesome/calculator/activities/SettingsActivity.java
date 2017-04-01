@@ -11,6 +11,7 @@ import us.team.awesome.calculator.preferences.SettingsFragment;
 
 public class SettingsActivity extends Activity {
     public static final String AUTO_CALCULATE = "autoCalculate";
+    public static final String CUSTOM_DRAWER = "customDrawer";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
